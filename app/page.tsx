@@ -10,6 +10,7 @@ import { CgChevronDown } from "react-icons/cg";
 import { FaBuilding, FaHome } from "react-icons/fa";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "@/firebase";
+import LoadingScreen from "@/components/LoadingScreen";
 
 
 
@@ -119,11 +120,9 @@ export default function Home() {
   ];
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center">
-      <div className="w-10 h-10 border-4 border-gray-200 border-t-black rounded-full animate-spin"></div>
-
-      Loading...</div>;
+    return <LoadingScreen />;
   }
+
 
   return (
     <>
