@@ -73,7 +73,7 @@ function AboutUsPage() {
                     <Image
                         width={10000}
                         height={10000}
-                        src="/assets/heroimage1.jpg"
+                        src="/assets/2.jpg"
                         alt="About Us Image"
                         className="w-full h-full object-cover"
                     />
@@ -93,7 +93,7 @@ function AboutUsPage() {
                                 <h3 className="text-2xl text-blue-300 font-bold mb-2">{stat.value}</h3>
                                 <div>
                                     <p className="text-white text-xl font-bold">{stat.label}</p>
-                                <p className="text-sm text-white mt-2">{stat.description}</p>
+                                    <p className="text-sm text-white mt-2">{stat.description}</p>
                                 </div>
                             </div>
                         ))}
@@ -161,7 +161,7 @@ function AboutUsPage() {
                             <Image
                                 width={10000}
                                 height={10000}
-                                src="/assets/heroimage1.jpg"
+                                src="/assets/6.jpg"
                                 alt="Mission Image"
                                 className="w-full h-full"
                             />
@@ -183,7 +183,7 @@ function AboutUsPage() {
                                 <Image
                                     width={400}
                                     height={400}
-                                    src="/assets/heroimage1.jpg"
+                                    src="/assets/4.jpg"
                                     alt={`${item.label} Image`}
                                     className="w-full h-full object-cover"
                                 />
@@ -195,7 +195,7 @@ function AboutUsPage() {
                                 <div className="absolute inset-0 flex flex-col justify-between items-start text-white p-8">
                                     <div>
                                         <h3 className="text-3xl font-semibold mb-2">{item.label}</h3>
-                                    <p className="text-gray-200 ">{item.description}</p>
+                                        <p className="text-gray-200 ">{item.description}</p>
                                     </div>
 
                                     <LinkButton title="Learn More" />

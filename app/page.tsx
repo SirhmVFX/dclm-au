@@ -227,7 +227,7 @@ export default function Home() {
                 <div className=" p-2 bg-primary absolute left-0 top-0">{service.icon}</div>
                 <div>
                   <h2 className="text-xl font-semibold mb-2">{service.title}</h2>
-                <p className="text-white text-sm ">{service.description}</p>
+                  <p className="text-white text-sm ">{service.description}</p>
                 </div>
                 <Link href="/services" className="text-blue-300 hover:underline mt-4 inline-block">
                   Learn More
@@ -239,7 +239,7 @@ export default function Home() {
               <Image
                 width={10000}
                 height={10000}
-                src="/assets/heroimage1.jpg"
+                src="/assets/1.jpg"
                 alt="map"
                 className="w-full h-full object-cover"
               />
@@ -312,7 +312,7 @@ export default function Home() {
                 <Image
                   width={10000}
                   height={10000}
-                  src="/assets/heroimage1.jpg"
+                  src="/assets/3.jpg"
                   alt="map"
                   className="w-full h-full object-cover"
                 />
@@ -380,31 +380,31 @@ export default function Home() {
 
       <section className=" py-32">
 
-       <div className="text-center pb-20">
-         <p>Testimonies</p>
-        <h1 className="text-4xl">What some of our <br /> members are saying</h1>
-       </div>
+        <div className="text-center pb-20">
+          <p>Testimonies</p>
+          <h1 className="text-4xl">What some of our <br /> members are saying</h1>
+        </div>
         <div>
 
           <div className="grid grid-cols-3">
             {testimonials.map((testimonial) => (
-            <div key={testimonial.id} className="border border-gray-300 p-6">
-              <div className="flex items-center gap-4 mb-4">
-                <Image
-                  width={10000}
-                  height={10000}
-                  src={testimonial.image}
-                  alt={testimonial.name}
-                  className="w-16 h-16 rounded-full object-cover"
-                />
-                <div>
-                  <h2 className="text-lg font-semibold">{testimonial.name}</h2>
-                  <p className="text-sm text-gray-500">{testimonial.role}</p>
+              <div key={testimonial.id} className="border border-gray-300 p-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <Image
+                    width={10000}
+                    height={10000}
+                    src="/assets/1.jpg"
+                    alt={testimonial.name}
+                    className="w-16 h-16 rounded-full object-cover"
+                  />
+                  <div>
+                    <h2 className="text-lg font-semibold">{testimonial.name}</h2>
+                    <p className="text-sm text-gray-500">{testimonial.role}</p>
+                  </div>
                 </div>
+                <p className="text-gray-600">{testimonial.feedback}</p>
               </div>
-              <p className="text-gray-600">{testimonial.feedback}</p>
-            </div>
-          ))}
+            ))}
           </div>
         </div>
 
