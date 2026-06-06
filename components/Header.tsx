@@ -74,7 +74,7 @@ function Header() {
             <div>
               <p className={`text-xs uppercase tracking-[0.35em] transition-colors duration-300 ${useDarkText ? "text-blue-700" : "text-white/90"
                 }`}>
-                Deeper Life
+                Deeper Life Bible Church
               </p>
               <h1 className={`text-lg font-semibold transition-colors duration-300 ${useDarkText ? "text-gray-900" : "text-white"
                 }`}>
