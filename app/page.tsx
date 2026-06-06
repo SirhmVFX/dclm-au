@@ -17,12 +17,12 @@ const heroSlides = [
     sub: "Not slothful in business; fervent in spirit; serving the Lord. Romans 12:11.",
   },
   {
-    src: "/assets/heroimage1.jpg",
+    src: "/assets/2.jpg",
     heading: <>Contending Earnestly <br /> <span>for the Faith</span></>,
     sub: "Beloved, earnestly contend for the faith which was once delivered unto the saints. Jude 1:3.",
   },
   {
-    src: "/assets/1.jpg",
+    src: "/assets/3.jpg",
     heading: <>Win. Build. <br /> <span>Commission.</span></>,
     sub: "Our mandate is to win students and staff for Christ, build them in faith, and commission them for the Kingdom.",
   },
