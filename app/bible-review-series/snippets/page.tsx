@@ -7,10 +7,10 @@ import { BiChevronRight } from "react-icons/bi";
 function Snippet() {
 
   const snippets = [
-    { img: "/assets/9.jpg", title: "When God Met Man", description: "In the beginning, God created the heavens and the earth." },
-    { img: "/assets/6.jpg", title: "When God Met Man", description: "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life." },
-    { img: "/assets/10.jpg", title: "Psalm 23:1", description: "The Lord is my shepherd, I lack nothing." },
-    { img: "/assets/8.jpg", title: "Romans 8:28", description: "And we know that in all things God works for the good of those who love him, who have been called according to his purpose." },
+    { img: "/assets/9.jpg", title: "Choose to Trust in God", description: "A reflection on what it means to place your complete trust in God in every situation of life." },
+    { img: "/assets/6.jpg", title: "Forgiveness", description: "Exploring the power and necessity of forgiveness as taught and modelled by our Lord Jesus Christ." },
+    { img: "/assets/10.jpg", title: "Believe in God", description: "An encouragement to hold fast to genuine faith in God, especially in the midst of life's challenges." },
+    { img: "/assets/8.jpg", title: "Joy as Jesus Comes", description: "Meditating on the joy that believers anticipate as we look forward to the coming of our Lord Jesus Christ." },
   ];
   return (
     <>
@@ -18,7 +18,7 @@ function Snippet() {
         <div className="w-300 mx-auto flex justify-between mb-16 ">
           <div>
             <p>Bible Snippets</p>
-            <h1 className="text-4xl font-bold text-gray-800">Bible Review Series</h1>
+            <h1 className="text-4xl font-bold text-gray-800">Short reflections from the Word</h1>
           </div>
 
 
@@ -33,15 +33,15 @@ function Snippet() {
             />
 
             <div className="absolute  bg-primary left-0 top-0 ">
-              <p>Bible Review Series</p>
+              <p>Bible Snippets</p>
             </div>
 
             <div className="absolute  bg-primary left-0 top-10 ">
-              <p>Bible Review Series</p>
+              <p>Spiritual Growth</p>
             </div>
 
             <div className="absolute  bg-primary left-0 top-20">
-              <p>Bible Review Series</p>
+              <p>Sound Doctrine</p>
             </div>
           </div>
 
@@ -105,8 +105,8 @@ function Snippet() {
             />
           </div>
 
-          <h1 className="text-xl font-bold mb-4">See our impact in action.</h1>
-          <p>Explore our portfolio to see how we’ve transformed energy challenges into sustainable solutions. From innovative solar systems to advanced energy storage, our projects showcase the power of green technology.</p>
+          <h1 className="text-xl font-bold mb-4">Contending earnestly for the faith.</h1>
+          <p>Please feel free to check on our Bible Review Series below — in-depth teachings and short reflections to help you grow in the knowledge of God’s Word.</p>
 
         </div>
       </section>

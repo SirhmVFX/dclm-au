@@ -11,104 +11,104 @@ import { FaBuilding, FaHome } from "react-icons/fa";
 export default function Home() {
   const [showBenefits, setShowBenefits] = useState(false);
   const stats = [
-    { value: "70%", label: "Savings on Energy Bills" },
-    { value: "100%", label: "Renewable Energy" },
-    { value: "50K+", label: "Homes Powered" },
-    { value: "30%", label: "Increase in Home Value" },
-    { value: "$31M", label: "Worth of savings" },
-    { value: "10M+", label: "Tons of CO₂ Avoided" },
+    { value: "100%", label: "Inter-denominational" },
+    { value: "24/7", label: "Daily Manna Available" },
+    { value: "Win", label: "Students & Staff" },
+    { value: "Build", label: "In Faith & Doctrine" },
+    { value: "Commission", label: "For the Master" },
+    { value: "AU", label: "Australia Campuses" },
   ];
 
   const services = [
     {
-      title: "Residential Solar",
+      title: "Our Mission",
       icon: <FaHome size={24} />,
       description:
-        "Harness the power of the sun to reduce your energy bills and carbon footprint with our residential solar solutions.",
+        "The DLCF has a divine mandate to win, build and commission students and staff of institutions of higher learning to be their best for the Master.",
     },
     {
-      title: "Commercial Solar",
+      title: "Bible Doctrine",
       icon: <FaBuilding size={24} />,
       description:
-        "Empower your business with sustainable energy solutions that drive cost savings and environmental responsibility.",
+        "We earnestly contend for the faith which was once delivered unto the saints, standing firm on sound doctrine and godly living.",
     },
     {
-      title: "Energy Storage",
+      title: "Daily Manna",
       icon: <FaBuilding size={24} />,
       description:
-        "Store excess solar energy for use during peak hours or power outages, ensuring a reliable and efficient energy supply.",
+        "Access our daily devotional resource to nourish your soul, grow in the Word, and stay connected with God every day.",
     },
   ];
 
   const testimonials = [
     {
       id: "01",
-      name: "John Doe",
-      role: "Homeowner",
+      name: "Emmanuel Okafor",
+      role: "Campus Member",
       image: "/assets/testimonial1.jpg",
       feedback:
-        "Switching to solar with Sunergy was the best decision I made. My energy bills have significantly decreased, and I feel good about reducing my carbon footprint.",
+        "DLCF Australia has been a blessing to my spiritual life. The fellowship, the Word, and the godly community have helped me grow tremendously in my walk with God.",
     },
     {
       id: "02",
-      name: "Jane Smith",
-      role: "Business Owner",
+      name: "Blessing Adeyemi",
+      role: "Corps Member",
       image: "/assets/testimonial2.jpg",
       feedback:
-        "The installation process was seamless, and the team at Sunergy was incredibly helpful. I highly recommend their services to anyone considering solar energy.",
+        "The Bible Review Series opened my eyes to deep truths in Scripture. I am grateful for the dedication of the team in making this resource available to us.",
     },
     {
       id: "03",
-      name: "Michael Johnson",
-      role: "Homeowner",
+      name: "Samuel Nwosu",
+      role: "Graduate",
       image: "/assets/testimonial3.jpg",
       feedback:
-        "I was amazed at how much I saved on my energy bills after installing solar panels. Sunergy's solutions are efficient and reliable.",
+        "Daily Manna has become an essential part of my morning routine. It keeps me grounded in God's Word no matter how busy my schedule gets.",
     },
     {
       id: "04",
-      name: "Sarah Williams",
-      role: "Homeowner",
+      name: "Grace Mensah",
+      role: "Campus Member",
       image: "/assets/testimonial4.jpg",
       feedback:
-        "Sunergy's solar solutions have been a game-changer for our family. We've seen significant savings on our energy bills while contributing to a more sustainable future.",
+        "DLCF Australia welcomed me warmly when I arrived as an international student. The fellowship gave me a spiritual family far from home.",
     },
     {
       id: "05",
-      name: "David Brown",
-      role: "Business Owner",
+      name: "Daniel Eze",
+      role: "Staff",
       image: "/assets/testimonial5.jpg",
       feedback:
-        "Sunergy has been instrumental in helping us transition to renewable energy. The support and expertise they provide are unmatched.",
+        "The godly counseling and monthly programmes have been instrumental in shaping my character and deepening my faith in the Lord Jesus Christ.",
     },
     {
       id: "06",
-      name: "Lisa Davis",
-      role: "Homeowner",
+      name: "Ruth Afolabi",
+      role: "Campus Member",
       image: "/assets/testimonial6.jpg",
       feedback:
-        "The solar panels installed by Sunergy have been a fantastic investment. Our energy bills are down, and we're proud to be part of the solution.",
+        "Being part of DLCF Australia has helped me balance academic excellence with spiritual growth. I am a better person and a stronger believer because of this fellowship.",
     }
   ];
 
   const benefits = [
     {
       id: "01",
-      title: "Cost Savings",
+      title: "Spiritual Growth",
       description:
-        "Save money on energy bills with our efficient solar solutions that harness the power of the sun.",
+        "We provide resources, teachings, and fellowship to help you grow deeper in your relationship with God and understanding of His Word.",
     },
     {
       id: "02",
-      title: "Environmental Impact",
+      title: "Academic Excellence",
       description:
-        "Reduce your carbon footprint and contribute to a cleaner planet by switching to renewable energy.",
+        "We believe a saintly intellectual excels in both faith and study. DLCF encourages and supports members to achieve their highest academic potential.",
     },
     {
       id: "03",
-      title: "Energy Independence",
+      title: "Godly Community",
       description:
-        "Gain energy independence and protect yourself from rising energy costs with our reliable solar systems.",
+        "Connect with like-minded believers across Australian campuses who share the same doctrinal faith, irrespective of denomination or affiliation.",
     },
   ];
   return (
@@ -131,12 +131,10 @@ export default function Home() {
         {/* Content */}
         <div className="relative pb-32 z-10 flex flex-col items-start justify-end h-full px-4  max-w-[1200px] mx-auto space-y-2">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white leading-tight ">
-            We are made perfect <br /> <span className="">in Christ Jesus</span>
+            We&apos;re Saintly <br /> <span className="">Intellectuals</span>
           </h1>
           <p className="text-base md:text-lg lg:text text-white/90 leading-relaxed w-2/3">
-            And hath put all things under His feet, and gave Him to be the head
-            over all things to the church, Which is His body, the fulness of Him
-            that filleth all in all. Ephesians 1:22-23.
+            Not slothful in business; fervent in spirit; serving the Lord. Romans 12:11.
           </p>
 
           <LinkButton title="Get to know us" />
@@ -146,11 +144,11 @@ export default function Home() {
       <div className="w-300 mx-auto py-32 relative h-[80vh]">
         <div className="grid grid-cols-2 gap-10">
           <div className="space-y-6">
-            <p>What we do</p>
+            <p>Who we are</p>
             <h1 className="text-[50px] leading-none">
-              We are dedicated to making individuals contend in their faith
+              We are dedicated to raising saintly intellectuals that make positive impacts
             </h1>
-            <LinkButton title="About DLM" />
+            <LinkButton title="About DLCF" />
           </div>
 
           <div>
@@ -166,8 +164,8 @@ export default function Home() {
 
             <div className="p-8 bg-primary text-white space-y-4">
               <p>
-                Sunergy was founded with a vision to drive sustainable energy
-                solutions that empower individuals, businesses, and communities.
+                DLCF Australia is an inter-denominational fellowship, embracing campus Christians
+                who share the same doctrinal belief irrespective of their denominations and affiliations.
               </p>
 
               <Link href="/about" className="text-blue-500 hover:underline">
@@ -207,13 +205,13 @@ export default function Home() {
         <div className="w-300 mx-auto py-32">
           <div className="grid grid-cols-2 gap-10 justify-between items-end">
             <div className="space-y-6">
-              <p>Our Services</p>
+              <p>What We Offer</p>
               <h1 className="text-[50px] leading-none">
-                Our solutions, your sustainable future.
+                Your spiritual welfare is our concern.
               </h1>
             </div>
             <div className="flex items-end justify-end">
-              <LinkButton title="About DLM" />
+              <LinkButton title="About DLCF" />
 
             </div>
           </div>
@@ -246,19 +244,19 @@ export default function Home() {
 
               <div className="p-2 bg-primary text-white top-10 left-10 absolute  ">
                 <p>
-                  solar Power
+                  Discipline
                 </p>
               </div>
 
               <div className="p-2 bg-primary text-white top-20 left-40 absolute  ">
                 <p>
-                  solar Power
+                  Dignity
                 </p>
               </div>
 
               <div className="p-2 bg-primary text-white left-20 top-40 absolute  ">
                 <p>
-                  solar Power
+                  Excellence
                 </p>
               </div>
 
@@ -273,7 +271,7 @@ export default function Home() {
 
               <div className="space-y-4">
                 <p>
-                  Discover the advantages of choosing DCLM for your spiritual
+                  Discover the advantages of choosing DLCF Australia for your spiritual
                   growth and community engagement.
                 </p>
 
@@ -283,7 +281,7 @@ export default function Home() {
 
             <div className="col-span-3">
               <div className="border border-gray-300 p-20 ">
-                <h1 className="text-[50px]">Why DCLM</h1>
+                <h1 className="text-[50px]">Why DLCF</h1>
               </div>
 
               {benefits.map((benefit) => (
@@ -331,19 +329,19 @@ export default function Home() {
 
           <div className="space-y-6 w-2/3 mx-auto text-center">
             <p>Our Achievements</p>
-            <p className="text-3xl ">We’re proud to advance renewable innovation, making a real impact on communities and the environment.</p>
+            <p className="text-3xl ">We’re proud to advance the cause of Christ, making a real impact on campuses and communities across Australia.</p>
           </div>
           <div className="grid grid-cols-3 gap-10 mt-10">
 
             <div className="space-y-4">
               <div className="p-10 bg-primary-deep text-white border-b border-primary">
-                <h1 className="text-2xl font-bold text-primary">Over 100,000 Homes Powered</h1>
-                <p className="">We’ve successfully installed solar and wind systems in thousands of homes, helping families consistently save on energy and gain true independence.</p>
+                <h1 className="text-2xl font-bold text-primary">Inter-denominational Fellowship</h1>
+                <p className="">We embrace campus Christians from all denominations who share the same doctrinal belief, creating a united body of saintly intellectuals.</p>
               </div>
 
               <div className="p-10 bg-primary-deep text-white border-t border-primary">
-                <h1 className="text-2xl font-bold text-primary">Over 100,000 Homes Powered</h1>
-                <p className="">We’ve successfully installed solar and wind systems in thousands of homes, helping families consistently save on energy and gain true independence.</p>
+                <h1 className="text-2xl font-bold text-primary">Monthly Programmes &amp; Counseling</h1>
+                <p className="">From monthly fellowship meetings to personal godly counseling, we consistently create opportunities to deepen your faith and personal growth.</p>
               </div>
             </div>
 
@@ -361,13 +359,13 @@ export default function Home() {
 
             <div className="space-y-4">
               <div className="p-10 bg-primary-deep text-white. border-b border-primary">
-                <h1 className="text-2xl font-bold text-primary">Over 100,000 Homes Powered</h1>
-                <p className="">We’ve successfully installed solar and wind systems in thousands of homes, helping families consistently save on energy and gain true independence.</p>
+                <h1 className="text-2xl font-bold text-primary">Win, Build &amp; Commission</h1>
+                <p className="">Our mandate is to win students and staff for Christ, build them up in the faith, and commission them to make a lasting impact for the Kingdom.</p>
               </div>
 
               <div className="p-10 bg-primary-deep text-white border-t border-primary" >
-                <h1 className="text-2xl font-bold text-primary">Over 100,000 Homes Powered</h1>
-                <p className="">We’ve successfully installed solar and wind systems in thousands of homes, helping families consistently save on energy and gain true independence.</p>
+                <h1 className="text-2xl font-bold text-primary">Daily Manna &amp; Bible Review</h1>
+                <p className="">We provide daily devotionals and in-depth Bible review teachings to help every member grow in the knowledge and fear of the Lord.</p>
               </div>
             </div>
 

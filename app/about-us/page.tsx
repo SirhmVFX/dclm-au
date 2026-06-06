@@ -37,24 +37,24 @@ function AboutUsPage() {
 
 
     const stats = [
-        { label: "Projects Completed", value: "150+", description: "Successfully delivered renewable energy solutions to clients worldwide." },
-        { label: "Satisfied Clients", value: "120+", description: "Happy customers who trust our renewable energy solutions." },
-        { label: "Awards Won", value: "10", description: "Recognized for excellence in sustainable energy innovation." },
-        { label: "Global Presence", value: "5 Continents", description: "Operating in multiple countries to promote renewable energy globally." },
+        { label: "Students & Staff Reached", value: "Win", description: "We actively reach out to students and staff of higher institutions across Australian campuses." },
+        { label: "Built in Faith", value: "Build", description: "We disciple and build members in sound doctrine, godly character, and spiritual maturity." },
+        { label: "Sent Forth", value: "Commission", description: "We commission believers to go out and make a meaningful impact for the Kingdom of God." },
+        { label: "Campuses in Australia", value: "AU", description: "An inter-denominational fellowship active across multiple Australian university campuses." },
     ];
 
     const processSteps = [
-        { id: "01", label: "Consultation", description: "We assess your energy needs and goals to recommend the best renewable solutions." },
-        { id: "02", label: "Design & Planning", description: "Our experts create a customized plan tailored to your specific requirements." },
-        { id: "03", label: "Installation", description: "Our skilled technicians handle the installation process with precision and care." },
-        { id: "04", label: "Maintenance & Support", description: "We provide ongoing support to ensure your system operates efficiently." },
+        { id: "01", label: "Outreach", description: "We reach out to students, staff, and fresh graduates across Australian campuses to introduce them to Christ." },
+        { id: "02", label: "Discipleship", description: "New members are nurtured in sound doctrine and the Word of God through Bible studies and fellowship activities." },
+        { id: "03", label: "Fellowship", description: "We create a warm, inter-denominational community where all believers grow together in unity and love." },
+        { id: "04", label: "Commissioning", description: "We equip and send members out to live as saintly intellectuals, making a positive impact in all areas of life." },
     ];
 
     const knownFor = [
-        { label: "Innovation", description: "Pioneering cutting-edge renewable energy technologies.", imgSrc: "/assets/innovation.jpg" },
-        { label: "Reliability", description: "Delivering consistent and dependable energy solutions.", imgSrc: "/assets/reliability.jpg" },
-        { label: "Affordability", description: "Providing cost-effective options for sustainable energy.", imgSrc: "/assets/affordability.jpg" },
-        { label: "Customer Service", description: "Dedicated to exceptional support and satisfaction.", imgSrc: "/assets/customer-service.jpg" },
+        { label: "Dignity", description: "We uphold the dignity of every individual as a bearer of the image of God, worthy of respect and love.", imgSrc: "/assets/4.jpg" },
+        { label: "Excellence", description: "We pursue excellence in both spiritual and academic life, believing a saintly intellectual honours God in all areas.", imgSrc: "/assets/4.jpg" },
+        { label: "Faith", description: "We are grounded in the faith once delivered to the saints, standing firm on the Word of God without compromise.", imgSrc: "/assets/4.jpg" },
+        { label: "Unity & Love", description: "We are united in love across denominations, building a fellowship where every believer belongs and thrives.", imgSrc: "/assets/4.jpg" },
     ];
 
 
@@ -66,7 +66,7 @@ function AboutUsPage() {
 
                 <div className="w-300 mx-auto flex flex-col items-center mb-16 text-center">
                     <p>About Us </p>
-                    <h1 className="text-5xl w-1/2 ">Driven by innovation, inspired by nature.</h1>
+                    <h1 className="text-5xl w-1/2 ">We work in unity and love to touch lives for Christ.</h1>
                 </div>
 
                 <div className="w-full h-175 ">
@@ -84,7 +84,7 @@ function AboutUsPage() {
             <section>
                 <div className="w-300 mx-auto py-20 flex flex-col items-center">
                     <h1 className="text-4xl w-3/4 text-center  text-gray-700">
-                        Sunergy transforms energy with sustainable solutions, building a cleaner, greener future through renewable systems that empower communities.
+                        DLCF Australia is united in its mission to spread the love of Christ and touch lives positively across campuses and communities.
                     </h1>
 
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mt-12">
@@ -113,7 +113,7 @@ function AboutUsPage() {
                             <h1 className="text-4xl mb-6">Our Mission</h1>
 
                             <p className="text-gray-600">
-                                At Sunergy, our mission is to accelerate the global transition to renewable energy by providing innovative, reliable, and affordable solutions that empower individuals and businesses to reduce their carbon footprint and embrace a sustainable future.
+                                The DLCF has a divine mandate to win, build and commission students and staff of institutions of higher learning, and fresh graduate volunteers, to be their best for the Master. It is an inter-denominational fellowship, embracing campus Christians who share the same doctrinal belief irrespective of their denominations and affiliations.
                             </p>
                         </div>
 
@@ -121,7 +121,7 @@ function AboutUsPage() {
                             <h1 className="text-4xl mb-6">Our Vision</h1>
 
                             <p className="text-gray-600">
-                                Our vision is to create a world where clean, renewable energy is accessible to all, fostering a healthier planet and a brighter future for generations to come.
+                                Our vision is to raise a generation of saintly intellectuals — believers who excel in both faith and academic life, and who go out to make a lasting, positive impact in Australia and beyond.
                             </p>
                         </div>
                     </div>
@@ -136,10 +136,10 @@ function AboutUsPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-16  ">
 
                         <div>
-                            <h1 className="text-4xl mb-6"> Process inSunergy</h1>
+                            <h1 className="text-4xl mb-6"> How We Work</h1>
 
                             <p className="text-gray-600">
-                                Our commitment to sustainability and cutting-edge technology ensures you’ll enjoy energy that’s not only reliable but also beneficial in multiple ways.
+                                Our commitment to prayer, true worship, and sound doctrine ensures every member grows spiritually and is equipped to live out their faith with integrity and excellence.
                             </p>
 
                             <div className="mt-12 space-y-8">

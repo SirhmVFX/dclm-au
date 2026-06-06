@@ -6,31 +6,31 @@ function Articles() {
     const articles = [
         {
             imgSrc: "/assets/1.jpg",
-            date: "September 15, 2024",
+            date: "February 25, 2024",
             readingTime: "5 min read",
-            title: "The Future of Renewable Energy: Trends to Watch in 2024",
-            description: "Discover the latest advancements and trends in renewable energy that are shaping the future of sustainable power generation."
+            title: "The Lighthouse at the Harbour",
+            description: "The Southern Cross is a constellation of stars used in navigation in the Southern Hemisphere — an emblem found on our national flag, pointing us to something greater."
         },
         {
             imgSrc: "/assets/2.jpg",
-            date: "September 10, 2024",
+            date: "February 25, 2024",
             readingTime: "7 min read",
-            title: "How Solar Panels Are Revolutionizing Home Energy Use",
-            description: "Learn how solar panels are transforming residential energy consumption and helping homeowners save money while reducing their carbon footprint."
+            title: "Humanity: Awesome Potential Beset by Innate Limits",
+            description: "Today we see unprecedented development in every field of human endeavour — yet new accomplishments in Medicine, Engineering, and AI reveal how much humanity still needs God."
         },
         {
             imgSrc: "/assets/3.jpg",
-            date: "September 5, 2024",
+            date: "February 25, 2024",
             readingTime: "6 min read",
-            title: "The Role of Wind Energy in Achieving Global Sustainability Goals",
-            description: "Explore the critical role that wind energy plays in meeting global sustainability targets and combating climate change."
+            title: "The Sacredness of Human Existence",
+            description: "Our civilization today upholds the sacredness of life — yet the deepest questions of human dignity and purpose find their answer only in the Creator."
         },
         {
             imgSrc: "/assets/4.jpg",
-            date: "September 1, 2024",
+            date: "February 25, 2024",
             readingTime: "8 min read",
-            title: "Innovations in Battery Storage for Renewable Energy Systems",
-            description: "Discover the latest innovations in battery storage technology that are enhancing the efficiency and reliability of renewable energy systems."
+            title: "The Oasis in the Desert",
+            description: "Humanity has never witnessed the prosperity we enjoy today — we live longer and healthier — yet unexpectedly, we are not happier. Where is the true oasis?"
         },
     ];
     return (
@@ -40,7 +40,7 @@ function Articles() {
 
                     <div>
                         <p>Articles</p>
-                        <h1 className="text-4xl font-bold text-gray-800">Green solutions at work.</h1>
+                        <h1 className="text-4xl font-bold text-gray-800">Insights to strengthen your faith.</h1>
                     </div>
 
                     <div className="bg-primary p-8 w-75">
@@ -54,7 +54,7 @@ function Articles() {
                             />
                         </div>
                         <h1>
-                            Explore tips, trends, and innovations in green technology to inspire your journey toward a  greener world
+                            Explore articles, reflections, and insights from DLCF Australia to inspire your journey of faith and godly living
                         </h1>
 
                     </div>
