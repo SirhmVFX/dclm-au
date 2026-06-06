@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-
 @theme {
   --color-primary: #112FE2ED;
   --color-primary-deep: #05146aed;
@@ -10,3 +9,148 @@ body {
   font-family: var(--font-dm-sans), system-ui, -apple-system, sans-serif;
 }
 
+/* ── Make the w-300 content container fluid on small screens ── */
+.w-300 {
+  width: 100%;
+  max-width: 75rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .w-300 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .w-300 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* ── Scroll-reveal animations ── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-32px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Hero slide crossfade */
+@keyframes heroSlideIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.hero-slide-enter {
+  animation: heroSlideIn 0.8s ease forwards;
+}
+
+/* Reveal classes — added via JS when element enters viewport */
+.reveal {
+  opacity: 0;
+}
+
+.reveal.animate-fade-up {
+  animation: fadeUp 0.7s ease forwards;
+}
+
+.reveal.animate-fade-in {
+  animation: fadeIn 0.7s ease forwards;
+}
+
+.reveal.animate-slide-left {
+  animation: slideInLeft 0.7s ease forwards;
+}
+
+.reveal.animate-slide-right {
+  animation: slideInRight 0.7s ease forwards;
+}
+
+/* Used directly without the reveal wrapper (e.g. dropdown open) */
+.animate-fade-in {
+  animation: fadeIn 0.2s ease forwards;
+}
+
+/* Stagger delays */
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+.delay-400 {
+  animation-delay: 0.4s;
+}
+
+.delay-500 {
+  animation-delay: 0.5s;
+}
+
+/* Accordion content transition */
+.accordion-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+}
+
+.accordion-content.open {
+  grid-template-rows: 1fr;
+}
+
+.accordion-inner {
+  overflow: hidden;
+}
