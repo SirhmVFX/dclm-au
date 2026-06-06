@@ -8,38 +8,53 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { CgChevronDown } from "react-icons/cg";
 import { FaBuilding, FaHome } from "react-icons/fa";
+import { getDocs, collection } from "firebase/firestore";
+import { db } from "@/firebase";
 
-/* ── Hero slides ── */
-const heroSlides = [
-  {
-    src: "/assets/heroimage2.jpg",
-    heading: <>We&apos;re Saintly <br /> <span>Intellectuals</span></>,
-    sub: "Not slothful in business; fervent in spirit; serving the Lord. Romans 12:11.",
-  },
-  {
-    src: "/assets/2.jpg",
-    heading: <>Contending Earnestly <br /> <span>for the Faith</span></>,
-    sub: "Beloved, earnestly contend for the faith which was once delivered unto the saints. Jude 1:3.",
-  },
-  {
-    src: "/assets/3.jpg",
-    heading: <>Win. Build. <br /> <span>Commission.</span></>,
-    sub: "Our mandate is to win students and staff for Christ, build them in faith, and commission them for the Kingdom.",
-  },
-];
+
 
 export default function Home() {
   /* Hero slideshow */
   const [currentSlide, setCurrentSlide] = useState(0);
   const [heroKey, setHeroKey] = useState(0);
 
+
+  const [heroSlidess, setHeroSlidess] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
+
+  const fetchHeroSlides = async () => {
+    try {
+
+      setLoading(false)
+      const snapshot = await getDocs(collection(db, 'heroSlides'));
+
+      const slides = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setHeroSlidess(slides);
+      console.log(slides);
+    } catch (error) {
+      console.error("Error fetching hero slides:", error);
+      setLoading(true)
+    }
+  };
+
+
   useEffect(() => {
+    fetchHeroSlides()
+  }, [])
+
+  useEffect(() => {
+    if (heroSlidess.length === 0) return;  // wait for data
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+      setCurrentSlide((prev) => (prev + 1) % heroSlidess.length);  // ← use live count
       setHeroKey((k) => k + 1);
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [heroSlidess.length]);
 
   function goToSlide(i: number) {
     setCurrentSlide(i);
@@ -103,11 +118,18 @@ export default function Home() {
     { id: "03", title: "Godly Community", description: "Connect with like-minded believers across Australian campuses who share the same doctrinal faith, irrespective of denomination or affiliation." },
   ];
 
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">
+      <div className="w-10 h-10 border-4 border-gray-200 border-t-black rounded-full animate-spin"></div>
+
+      Loading...</div>;
+  }
+
   return (
     <>
       {/* ── HERO SLIDESHOW ── */}
       <div className="relative w-full h-screen overflow-hidden">
-        {heroSlides.map((slide, i) => (
+        {heroSlidess.map((slide, i) => (
           <div
             key={i}
             className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${i === currentSlide ? "opacity-100" : "opacity-0"}`}
@@ -122,16 +144,16 @@ export default function Home() {
           className="hero-slide-enter relative pb-16 md:pb-32 z-10 flex flex-col items-start justify-end h-full px-4 max-w-300 mx-auto space-y-3"
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-white leading-tight">
-            {heroSlides[currentSlide].heading}
+            {heroSlidess[currentSlide]?.heading}
           </h1>
           <p className="text-sm md:text-lg text-white/90 leading-relaxed w-full sm:w-2/3">
-            {heroSlides[currentSlide].sub}
+            {heroSlidess[currentSlide]?.sub}
           </p>
           <LinkButton title="Get to know us" />
         </div>
 
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-3">
-          {heroSlides.map((_, i) => (
+          {heroSlidess.map((_, i) => (
             <button
               key={i}
               onClick={() => goToSlide(i)}
