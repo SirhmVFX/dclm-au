@@ -338,7 +338,7 @@ export default function Home() {
             {testimonials.map((testimonial, i) => (
               <div
                 key={testimonial.id}
-                className={`border border-gray-300 p-5 md:p-6 reveal delay-${Math.min((i % 3 + 1) * 100, 300)}`}
+                className={`border border-gray-300 p-5 md:p-6 `}
               >
                 <div className="flex items-center gap-4 mb-4">
                   <Image width={64} height={64} src="/assets/1.jpg" alt={testimonial.name} className="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover" />
