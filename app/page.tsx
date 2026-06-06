@@ -115,7 +115,7 @@ export default function Home() {
 
   const benefits = [
     { id: "01", title: "Spiritual Growth", description: "We provide resources, teachings, and fellowship to help you grow deeper in your relationship with God and understanding of His Word." },
-    { id: "02", title: "Academic Excellence", description: "We believe a saintly intellectual excels in both faith and study. DLCF encourages and supports members to achieve their highest academic potential." },
+    { id: "02", title: "Excellence in Life", description: "We believe a saintly intellectual excels in both faith and study. DLCF encourages and supports members to achieve their highest academic potential." },
     { id: "03", title: "Godly Community", description: "Connect with like-minded believers across Australian campuses who share the same doctrinal faith, irrespective of denomination or affiliation." },
   ];
 
@@ -188,22 +188,22 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 -z-10 hidden md:block">
+        <div className="absolute bottom-20 left-0 -z-10 right-0 hidden md:block">
           <Image decoding="async" width={1200} height={800} src="/assets/map.png" alt="map background" className="w-full h-full" />
         </div>
 
         <div ref={statsRef} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 md:gap-10 pt-12 md:pt-28">
           {stats.map((stat, index) => (
-            <div key={index} className={`reveal delay-${(index + 1) * 100}`}>
-              <p className="text-3xl md:text-4xl font-bold">{stat.value}</p>
+            <div key={index} >
+              <p className="text-sm md:text-2xl text-black font-bold">{stat.value}</p>
               <p className="text-xs md:text-sm">{stat.label}</p>
             </div>
           ))}
         </div>
-      </div>
+      </div >
 
       {/* ── WHAT WE OFFER ── */}
-      <section>
+      < section >
         <div className="w-300 mx-auto py-16 md:py-32">
           <div ref={offerRef} className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-10 justify-between items-end mb-8 md:mb-0">
             <div className="space-y-4 md:space-y-6">
@@ -284,10 +284,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* ── ACHIEVEMENTS ── */}
-      <section className="bg-primary-deep text-white">
+      < section className="bg-primary-deep text-white" >
         <div className="w-300 mx-auto py-16 md:py-32">
           <div ref={achieveRef} className="space-y-4 md:space-y-6 w-full md:w-2/3 mx-auto text-center">
             <p>Our Achievements</p>
@@ -324,10 +324,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* ── TESTIMONIALS ── */}
-      <section className="py-16 md:py-32">
+      < section className="py-16 md:py-32" >
         <div ref={testiRef}>
           <div className="text-center pb-10 md:pb-20">
             <p>Testimonies</p>
@@ -352,7 +352,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section >
 
       <CTA />
     </>
