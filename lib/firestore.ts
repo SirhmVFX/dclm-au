@@ -459,8 +459,14 @@ export async function getAboutValues(): Promise<AboutValue[]> {
 
 export async function getAboutValueBySlug(slug: string): Promise<AboutValue | null> {
     const snap = await getDocs(collection(db, "aboutValues"));
-    const doc = snap.docs.find((d) => d.data().slug === slug);
-    if (!doc) return null;
-    return { id: doc.id, ...doc.data() } as AboutValue;
+    const found = snap.docs.find((d) => {
+        const data = d.data();
+        // match stored slug first, then fall back to auto-derived slug from label
+        const stored = data.slug as string | undefined;
+        const derived = (data.label as string || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+        return stored === slug || derived === slug;
+    });
+    if (!found) return null;
+    return { id: found.id, ...found.data() } as AboutValue;
 }
 

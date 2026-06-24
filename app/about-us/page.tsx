@@ -169,32 +169,42 @@ function AboutUsPage() {
             <section>
                 <div className="w-300 mx-auto py-12 md:py-20 px-0">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-16">
-                        {values.map((item, i) => (
-                            <Link
-                                key={item.id ?? i}
-                                href={item.slug ? `/about-us/values/${item.slug}` : "#"}
-                                className="relative w-full h-64 md:h-80 overflow-hidden block group"
-                            >
-                                <div className="absolute inset-0">
-                                    <Image
-                                        src={item.image || "/assets/4.jpg"}
-                                        alt={item.label}
-                                        fill
-                                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        {values.map((item, i) => {
+                            // derive slug from label if DB record doesn't have one yet
+                            const slug = item.slug || item.label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+                            return (
+                                <div
+                                    key={item.id ?? i}
+                                    className="relative w-full h-64 md:h-80 overflow-hidden group"
+                                >
+                                    {/* image sits in its own div — no anchor ancestor confusion */}
+                                    <div className="absolute inset-0">
+                                        <Image
+                                            src={item.image || "/assets/4.jpg"}
+                                            alt={item.label}
+                                            fill
+                                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                            sizes="(max-width: 640px) 100vw, 50vw"
+                                        />
+                                    </div>
+                                    <div className="absolute inset-0 bg-black/50" />
+                                    {/* text content */}
+                                    <div className="absolute inset-0 flex flex-col justify-between items-start text-white p-6 md:p-8 pointer-events-none">
+                                        <div>
+                                            <h3 className="text-2xl md:text-3xl font-semibold mb-2">{item.label}</h3>
+                                            <p className="text-gray-200 text-sm md:text-base">{item.description}</p>
+                                        </div>
+                                        <span className="text-blue-300 text-sm font-medium">Learn More →</span>
+                                    </div>
+                                    {/* full-area link overlay on top of everything */}
+                                    <Link
+                                        href={`/about-us/values/${slug}`}
+                                        className="absolute inset-0 z-10"
+                                        aria-label={`Learn more about ${item.label}`}
                                     />
                                 </div>
-                                <div className="absolute inset-0 bg-black/50" />
-                                <div className="absolute inset-0 flex flex-col justify-between items-start text-white p-6 md:p-8">
-                                    <div>
-                                        <h3 className="text-2xl md:text-3xl font-semibold mb-2">{item.label}</h3>
-                                        <p className="text-gray-200 text-sm md:text-base">{item.description}</p>
-                                    </div>
-                                    <span className="text-blue-300 text-sm font-medium group-hover:underline">
-                                        Learn More →
-                                    </span>
-                                </div>
-                            </Link>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
             </section>
