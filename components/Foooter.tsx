@@ -1,9 +1,24 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { BsYoutube } from "react-icons/bs";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
+import { getSiteSettings, SiteSettings } from "@/lib/firestore";
 
 function Footer() {
+  const [settings, setSettings] = useState<SiteSettings | null>(null);
+
+  useEffect(() => {
+    getSiteSettings().then(setSettings).catch(() => { });
+  }, []);
+
+  const facebook = settings?.facebookUrl ?? "https://web.facebook.com/dlcfaustralia/";
+  const instagram = settings?.instagramUrl ?? "https://www.instagram.com/dlcfaustralia";
+  const youtube = settings?.youtubeUrl ?? "https://www.youtube.com/@dlcfaustralia";
+  const copyright = settings?.footerCopyright ?? "© 2026 DCLM Australia. All rights reserved.";
+
   return (
     <footer className="bg-[#07112b] text-white">
       <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
@@ -18,9 +33,9 @@ function Footer() {
             </div>
             <p className="max-w-md text-sm text-gray-300">A fellowship committed to winning souls, building saints, and commissioning believers for effective Christian service in Australia.</p>
             <div className="flex gap-3 text-gray-200">
-              <Link href="https://web.facebook.com/dlcfaustralia/" className="hover:text-white" aria-label="Facebook"><FaFacebook className="h-5 w-5" /></Link>
-              <Link href="https://www.instagram.com/dlcfaustralia" className="hover:text-white" aria-label="Instagram"><FaInstagram className="h-5 w-5" /></Link>
-              <Link href="https://www.youtube.com/@dlcfaustralia" className="hover:text-white" aria-label="YouTube"><BsYoutube className="h-5 w-5" /></Link>
+              <Link href={facebook} className="hover:text-white" aria-label="Facebook"><FaFacebook className="h-5 w-5" /></Link>
+              <Link href={instagram} className="hover:text-white" aria-label="Instagram"><FaInstagram className="h-5 w-5" /></Link>
+              <Link href={youtube} className="hover:text-white" aria-label="YouTube"><BsYoutube className="h-5 w-5" /></Link>
             </div>
           </div>
 
@@ -29,7 +44,7 @@ function Footer() {
             <ul className="space-y-2 text-sm text-gray-300">
               <li><Link href="/about-us" className="hover:text-white">About Us</Link></li>
               <li><Link href="/contact-us" className="hover:text-white">Contact Us</Link></li>
-              <li><Link href="/sign-up" className="hover:text-white">Join Our Fellowship</Link></li>
+              <li><Link href="/contact-us" className="hover:text-white">Join Our Fellowship</Link></li>
             </ul>
           </div>
 
@@ -47,13 +62,13 @@ function Footer() {
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-blue-100">Support</h3>
             <ul className="space-y-2 text-sm text-gray-300">
               <li><Link href="/contact-us" className="hover:text-white">Prayer Requests</Link></li>
-              <li><Link href="/login" className="hover:text-white">Member Login</Link></li>
-              <li><Link href="/sign-up" className="hover:text-white">Become a Member</Link></li>
+              <li><Link href="/contact-us" className="hover:text-white">Connect with Us</Link></li>
+              <li><Link href="/contact-us" className="hover:text-white">Become a Member</Link></li>
             </ul>
           </div>
         </div>
       </div>
-      <div className="border-t border-white/10 py-4 text-center text-xs text-gray-300">© 2026 DCLM Australia. All rights reserved.</div>
+      <div className="border-t border-white/10 py-4 text-center text-xs text-gray-300">{copyright}</div>
     </footer>
   );
 }

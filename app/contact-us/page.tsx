@@ -2,6 +2,76 @@
 
 import FAQ from "@/components/FAQ";
 import { useReveal } from "@/components/useReveal";
+import { useState } from "react";
+import { submitContactMessage } from "@/lib/firestore";
+
+function ContactForm() {
+  const [form, setForm] = useState({ firstName: "", lastName: "", email: "", phone: "", message: "" });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setSubmitting(true);
+    setError("");
+    try {
+      await submitContactMessage(form);
+      setSubmitted(true);
+      setForm({ firstName: "", lastName: "", email: "", phone: "", message: "" });
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  if (submitted) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full py-16 text-center space-y-4">
+        <div className="w-16 h-16 bg-primary flex items-center justify-center">
+          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h3 className="text-xl font-semibold text-gray-900">Message sent!</h3>
+        <p className="text-gray-600 max-w-sm">Thank you for reaching out. We will get back to you as soon as possible.</p>
+        <button onClick={() => setSubmitted(false)} className="text-primary font-medium hover:underline text-sm">Send another message</button>
+      </div>
+    );
+  }
+
+  return (
+    <form className="space-y-6" onSubmit={handleSubmit}>
+      {error && <p className="text-sm text-red-600 bg-red-50 border border-red-200 px-4 py-3">{error}</p>}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">FIRST NAME</label>
+          <input required type="text" id="firstName" value={form.firstName} onChange={(e) => setForm({ ...form, firstName: e.target.value })} className="w-full px-4 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="Enter your first name" />
+        </div>
+        <div>
+          <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">LAST NAME</label>
+          <input required type="text" id="lastName" value={form.lastName} onChange={(e) => setForm({ ...form, lastName: e.target.value })} className="w-full px-4 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="Enter your last name" />
+        </div>
+      </div>
+      <div>
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">YOUR EMAIL</label>
+        <input required type="email" id="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full px-4 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="Enter your email address" />
+      </div>
+      <div>
+        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">YOUR PHONE</label>
+        <input type="tel" id="phone" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="w-full px-4 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="Enter your phone number" />
+      </div>
+      <div>
+        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">MESSAGE</label>
+        <textarea required id="message" rows={4} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="w-full px-4 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="Tell us how we can help you" />
+      </div>
+      <button type="submit" disabled={submitting} className="w-full bg-primary text-white py-3 px-6 hover:bg-primary-deep transition-colors font-semibold disabled:opacity-60">
+        {submitting ? "Sending…" : "Submit"}
+      </button>
+    </form>
+  );
+}
 
 export default function ContactPage() {
   const heroRef = useReveal("animate-fade-up");
@@ -118,33 +188,7 @@ export default function ContactPage() {
 
             {/* Form column */}
             <div className="bg-white p-6 md:p-8">
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">FIRST NAME</label>
-                    <input type="text" id="firstName" name="firstName" className="w-full px-4 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="Enter your first name" />
-                  </div>
-                  <div>
-                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">LAST NAME</label>
-                    <input type="text" id="lastName" name="lastName" className="w-full px-4 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="Enter your last name" />
-                  </div>
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">YOUR EMAIL</label>
-                  <input type="email" id="email" name="email" className="w-full px-4 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="Enter your email address" />
-                </div>
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">YOUR PHONE</label>
-                  <input type="tel" id="phone" name="phone" className="w-full px-4 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="Enter your phone number" />
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">MESSAGE</label>
-                  <textarea id="message" name="message" rows={4} className="w-full px-4 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="Tell us how we can help you" />
-                </div>
-                <button type="submit" className="w-full bg-primary text-white py-3 px-6 hover:bg-primary-deep transition-colors font-semibold">
-                  Submit
-                </button>
-              </form>
+              <ContactForm />
             </div>
           </div>
         </div>

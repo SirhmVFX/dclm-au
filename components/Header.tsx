@@ -153,25 +153,16 @@ function Header() {
             ))}
           </nav>
 
-          {/* Desktop CTA buttons */}
+          {/* Desktop CTA button */}
           <div className="hidden items-center gap-3 md:flex">
             <Link
-              href="/login"
-              className={`px-4 py-2 text-sm font-semibold transition-colors duration-300 ${useDarkText
-                ? "text-blue-700 hover:bg-blue-50"
-                : "text-white hover:bg-white/10"
-                }`}
-            >
-              Login
-            </Link>
-            <Link
-              href="/sign-up"
+              href="/contact-us"
               className={`px-4 py-2 text-sm font-semibold transition-colors duration-300 ${useDarkText
                 ? "bg-blue-700 text-white hover:bg-blue-800"
                 : "bg-white text-gray-900 hover:bg-gray-100"
                 }`}
             >
-              Sign up
+              Connect with us
             </Link>
           </div>
 
@@ -233,18 +224,11 @@ function Header() {
                 </div>
               ))}
               <Link
-                href="/login"
+                href="/contact-us"
                 onClick={() => setIsMenuOpen(false)}
-                className="rounded bg-blue-700 px-3 py-2 text-center text-white"
+                className="rounded bg-blue-700 px-3 py-2 text-center text-white font-semibold"
               >
-                Login
-              </Link>
-              <Link
-                href="/sign-up"
-                onClick={() => setIsMenuOpen(false)}
-                className="rounded border border-blue-700 px-3 py-2 text-center text-blue-700"
-              >
-                Sign up
+                Connect with us
               </Link>
             </nav>
           </div>
