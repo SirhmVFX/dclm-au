@@ -46,8 +46,10 @@ export default function ArticleDetailPage() {
         <>
             {/* ── HERO IMAGE ── */}
             {article.imgSrc && (
-                <div className="w-full h-64 sm:h-96 md:h-120 mt-16 md:mt-20 relative">
-                    <Image src={article.imgSrc} alt={article.title} fill className="object-cover" priority />
+                <div className="w-full h-64 sm:h-96 md:h-120 mt-16 md:mt-20 relative overflow-hidden">
+                    <div className="absolute inset-0">
+                        <Image src={article.imgSrc} alt={article.title} fill className="object-cover" priority />
+                    </div>
                     <div className="absolute inset-0 bg-black/40" />
                     <div className="absolute bottom-8 left-0 right-0 w-300 mx-auto px-4">
                         <Link href="/others/articles" className="text-white/80 text-sm hover:text-white">← Articles</Link>

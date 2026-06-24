@@ -80,13 +80,15 @@ function AboutUsPage() {
                     </h1>
                 </div>
                 <div className="w-full h-56 sm:h-96 md:h-176 relative overflow-hidden">
-                    <Image
-                        fill
-                        src={hero?.image || "/assets/2.jpg"}
-                        alt="About Us Image"
-                        className="object-cover"
-                        priority
-                    />
+                    <div className="absolute inset-0">
+                        <Image
+                            fill
+                            src={hero?.image || "/assets/2.jpg"}
+                            alt="About Us Image"
+                            className="object-cover"
+                            priority
+                        />
+                    </div>
                 </div>
             </section>
 
@@ -149,13 +151,15 @@ function AboutUsPage() {
                                 ))}
                             </div>
                         </div>
-                        <div className="hidden md:block relative h-full min-h-96">
-                            <Image
-                                fill
-                                src={howWeWork?.image || "/assets/6.jpg"}
-                                alt="How We Work"
-                                className="object-cover"
-                            />
+                        <div className="hidden md:block relative h-full min-h-96 overflow-hidden">
+                            <div className="absolute inset-0">
+                                <Image
+                                    fill
+                                    src={howWeWork?.image || "/assets/6.jpg"}
+                                    alt="How We Work"
+                                    className="object-cover"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

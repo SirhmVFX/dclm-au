@@ -45,13 +45,15 @@ export default function ValueDetailPage() {
         <>
             {/* ── HERO ── */}
             <div className="w-full h-64 sm:h-80 md:h-120 mt-16 md:mt-20 relative overflow-hidden">
-                <Image
-                    src={value.image || "/assets/4.jpg"}
-                    alt={value.label}
-                    fill
-                    className="object-cover"
-                    priority
-                />
+                <div className="absolute inset-0">
+                    <Image
+                        src={value.image || "/assets/4.jpg"}
+                        alt={value.label}
+                        fill
+                        className="object-cover"
+                        priority
+                    />
+                </div>
                 <div className="absolute inset-0 bg-black/55" />
                 <div className="absolute inset-0 flex flex-col justify-end pb-10 w-300 mx-auto px-4">
                     <Link href="/about-us" className="text-white/70 text-sm hover:text-white mb-4">← About Us</Link>

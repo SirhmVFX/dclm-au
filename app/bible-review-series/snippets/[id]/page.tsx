@@ -45,8 +45,10 @@ export default function SnippetDetailPage() {
         <>
             {/* ── HERO IMAGE ── */}
             {snippet.img && (
-                <div className="w-full h-64 sm:h-80 md:h-105 mt-16 md:mt-20 relative">
-                    <Image src={snippet.img} alt={snippet.title} fill className="object-cover" priority />
+                <div className="w-full h-64 sm:h-80 md:h-105 mt-16 md:mt-20 relative overflow-hidden">
+                    <div className="absolute inset-0">
+                        <Image src={snippet.img} alt={snippet.title} fill className="object-cover" priority />
+                    </div>
                     <div className="absolute inset-0 bg-black/50" />
                     <div className="absolute inset-0 flex flex-col justify-end pb-10 w-300 mx-auto px-4">
                         <Link href="/bible-review-series/snippets" className="text-white/80 text-sm hover:text-white mb-3">← Snippets</Link>

@@ -45,8 +45,10 @@ export default function TeachingDetailPage() {
         <>
             {/* ── HERO IMAGE ── */}
             {teaching.imgSrc && (
-                <div className="w-full h-64 sm:h-80 md:h-105 mt-16 md:mt-20 relative">
-                    <Image src={teaching.imgSrc} alt={teaching.title} fill className="object-cover" priority />
+                <div className="w-full h-64 sm:h-80 md:h-105 mt-16 md:mt-20 relative overflow-hidden">
+                    <div className="absolute inset-0">
+                        <Image src={teaching.imgSrc} alt={teaching.title} fill className="object-cover" priority />
+                    </div>
                     <div className="absolute inset-0 bg-black/60" />
                     <div className="absolute inset-0 flex flex-col justify-end pb-10 w-300 mx-auto px-4">
                         <Link href="/bible-review-series/teachings" className="text-white/80 text-sm hover:text-white mb-3">← Teachings</Link>

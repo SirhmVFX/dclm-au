@@ -127,7 +127,9 @@ export default function Home() {
       <div className="relative w-full h-screen overflow-hidden">
         {heroSlides.map((slide, i) => (
           <div key={i} className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${i === currentSlide ? "opacity-100" : "opacity-0"}`}>
-            <Image src={slide.src} alt={`Hero slide ${i + 1}`} fill priority={i === 0} className="object-cover" />
+            <div className="absolute inset-0">
+              <Image src={slide.src} alt={`Hero slide ${i + 1}`} fill priority={i === 0} className="object-cover" />
+            </div>
           </div>
         ))}
         <div className="absolute inset-0 bg-black/50" />
@@ -220,10 +222,12 @@ export default function Home() {
               </div>
             ))}
             <div className="relative hidden md:block h-full min-h-64 overflow-hidden">
-              <Image fill src="/assets/1.jpg" alt="Fellowship image" className="object-cover" />
-              <div className="p-2 bg-primary text-white top-10 left-10 absolute"><p>Discipline</p></div>
-              <div className="p-2 bg-primary text-white top-20 left-20 absolute"><p>Dignity</p></div>
-              <div className="p-2 bg-primary text-white left-10 top-36 absolute"><p>Excellence</p></div>
+              <div className="absolute inset-0">
+                <Image fill src="/assets/1.jpg" alt="Fellowship image" className="object-cover" />
+              </div>
+              <div className="p-2 bg-primary text-white top-10 left-10 absolute z-10"><p>Discipline</p></div>
+              <div className="p-2 bg-primary text-white top-20 left-20 absolute z-10"><p>Dignity</p></div>
+              <div className="p-2 bg-primary text-white left-10 top-36 absolute z-10"><p>Excellence</p></div>
             </div>
           </div>
 
@@ -260,7 +264,9 @@ export default function Home() {
                 );
               })}
               <div className="relative w-full h-48 md:h-75 overflow-hidden">
-                <Image fill src="/assets/3.jpg" alt="Fellowship" className="object-cover" />
+                <div className="absolute inset-0">
+                  <Image fill src="/assets/3.jpg" alt="Fellowship" className="object-cover" />
+                </div>
               </div>
             </div>
           </div>
