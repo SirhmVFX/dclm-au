@@ -306,21 +306,24 @@ export async function getWhatWeOffer(): Promise<WhatWeOffer | null> {
 }
 
 export async function getServices(): Promise<Service[]> {
-    const q = query(collection(db, "services"), orderBy("order"));
-    const snap = await getDocs(q);
-    return snap.docs.map((d) => ({ id: d.id, ...d.data() } as Service));
+    const snap = await getDocs(collection(db, "services"));
+    return snap.docs
+        .map((d) => ({ id: d.id, ...d.data() } as Service))
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 }
 
 export async function getBenefits(): Promise<Benefit[]> {
-    const q = query(collection(db, "benefits"), orderBy("order"));
-    const snap = await getDocs(q);
-    return snap.docs.map((d) => ({ id: d.id, ...d.data() } as Benefit));
+    const snap = await getDocs(collection(db, "benefits"));
+    return snap.docs
+        .map((d) => ({ id: d.id, ...d.data() } as Benefit))
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 }
 
 export async function getAchievements(): Promise<Achievement[]> {
-    const q = query(collection(db, "achievements"), orderBy("order"));
-    const snap = await getDocs(q);
-    return snap.docs.map((d) => ({ id: d.id, ...d.data() } as Achievement));
+    const snap = await getDocs(collection(db, "achievements"));
+    return snap.docs
+        .map((d) => ({ id: d.id, ...d.data() } as Achievement))
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 }
 
 // ── About Page CMS ─────────────────────────────────────────
