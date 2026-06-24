@@ -45,7 +45,7 @@ export default function SnippetDetailPage() {
         <>
             {/* ── HERO IMAGE ── */}
             {snippet.img && (
-                <div className="w-full h-64 sm:h-80 md:h-[420px] mt-16 md:mt-20 relative">
+                <div className="w-full h-64 sm:h-80 md:h-105 mt-16 md:mt-20 relative">
                     <Image src={snippet.img} alt={snippet.title} fill className="object-cover" priority />
                     <div className="absolute inset-0 bg-black/50" />
                     <div className="absolute inset-0 flex flex-col justify-end pb-10 w-300 mx-auto px-4">

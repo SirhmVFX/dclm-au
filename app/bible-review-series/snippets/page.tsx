@@ -36,11 +36,11 @@ function SnippetsPage() {
             <p>Bible Snippets</p>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800">Short reflections from the Word</h1>
           </div>
-          <div className="relative w-full sm:w-64 h-40 shrink-0">
-            <Image width={400} height={200} src="/assets/11.jpg" alt="Bible Review Series" className="w-full h-full object-cover" />
-            <div className="absolute bg-primary text-white text-sm px-2 py-1 left-0 top-0"><p>Bible Snippets</p></div>
-            <div className="absolute bg-primary text-white text-sm px-2 py-1 left-0 top-10"><p>Spiritual Growth</p></div>
-            <div className="absolute bg-primary text-white text-sm px-2 py-1 left-0 top-20"><p>Sound Doctrine</p></div>
+          <div className="relative w-full sm:w-64 h-40 shrink-0 overflow-hidden">
+            <Image fill src="/assets/11.jpg" alt="Bible Review Series" className="object-cover" />
+            <div className="absolute bg-primary text-white text-sm px-2 py-1 left-0 top-0 z-10"><p>Bible Snippets</p></div>
+            <div className="absolute bg-primary text-white text-sm px-2 py-1 left-0 top-10 z-10"><p>Spiritual Growth</p></div>
+            <div className="absolute bg-primary text-white text-sm px-2 py-1 left-0 top-20 z-10"><p>Sound Doctrine</p></div>
           </div>
         </div>
       </section>
@@ -60,11 +60,10 @@ function SnippetsPage() {
                 >
                   <div className="relative w-full h-48 overflow-hidden">
                     <Image
-                      width={600}
-                      height={300}
+                      fill
                       src={snippet.img || "/assets/9.jpg"}
                       alt={snippet.title}
-                      className="w-full h-full object-cover"
+                      className="object-cover"
                     />
                   </div>
                   <div className="p-6">
@@ -82,11 +81,11 @@ function SnippetsPage() {
       </section>
 
       {/* ── BANNER ── */}
-      <section className="w-full h-64 sm:h-96 md:h-124 relative">
-        <Image width={1600} height={700} src="/assets/12.jpg" alt="Bible Review Series" className="w-full h-full object-cover" />
-        <div className="absolute inset-x-4 sm:inset-auto sm:left-[10%] sm:w-105 top-8 sm:top-12 md:top-20 bg-primary/35 text-white p-5 md:p-6">
-          <div className="w-20 h-20 md:w-32 md:h-32 mb-4">
-            <Image width={128} height={128} src="/assets/dlclogo.png" alt="DLCF Logo" className="w-full h-full object-contain" />
+      <section className="w-full h-64 sm:h-96 md:h-124 relative overflow-hidden">
+        <Image fill src="/assets/12.jpg" alt="Bible Review Series" className="object-cover" />
+        <div className="absolute inset-x-4 sm:inset-auto sm:left-[10%] sm:w-105 top-8 sm:top-12 md:top-20 bg-primary/35 text-white p-5 md:p-6 z-10">
+          <div className="relative w-20 h-20 md:w-32 md:h-32 mb-4">
+            <Image fill src="/assets/dlclogo.png" alt="DLCF Logo" className="object-contain" />
           </div>
           <h1 className="text-lg md:text-xl font-bold mb-3">Contending earnestly for the faith.</h1>
           <p className="text-sm md:text-base">Please feel free to check on our Bible Review Series below — in-depth teachings and short reflections to help you grow in the knowledge of God&apos;s Word.</p>

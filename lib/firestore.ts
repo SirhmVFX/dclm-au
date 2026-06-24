@@ -254,6 +254,50 @@ export async function submitContactMessage(data: {
     });
 }
 
+// ── Contact Page CMS ───────────────────────────────────────
+
+export interface ContactHero {
+    id?: string;
+    heading: string;
+    subtext: string;
+}
+
+export interface ContactCard {
+    id?: string;
+    title: string;
+    description: string;
+    icon: string;
+    ctaLabel: string;
+    ctaHref: string;
+    order: number;
+}
+
+export interface ContactInfo {
+    id?: string;
+    title: string;
+    subtitle: string;
+    description: string;
+}
+
+export interface ContactDetails {
+    id?: string;
+    address: string;
+    phone: string;
+    emailLabel: string;
+    emailHref: string;
+}
+
+export const getContactHero = () => getSingleDoc<ContactHero>("contactHero");
+export const getContactInfo = () => getSingleDoc<ContactInfo>("contactInfo");
+export const getContactDetails = () => getSingleDoc<ContactDetails>("contactDetails");
+
+export async function getContactCards(): Promise<ContactCard[]> {
+    const snap = await getDocs(collection(db, "contactCards"));
+    return snap.docs
+        .map((d) => ({ id: d.id, ...d.data() } as ContactCard))
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+}
+
 // ── Homepage CMS ───────────────────────────────────────────
 
 export interface WhoWeAre {
@@ -374,7 +418,9 @@ export interface AboutProcessStep {
 export interface AboutValue {
     id?: string;
     label: string;
+    slug: string;
     description: string;
+    content?: string;
     image: string;
     order: number;
 }
@@ -409,5 +455,12 @@ export async function getAboutValues(): Promise<AboutValue[]> {
     return snap.docs
         .map((d) => ({ id: d.id, ...d.data() } as AboutValue))
         .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+}
+
+export async function getAboutValueBySlug(slug: string): Promise<AboutValue | null> {
+    const snap = await getDocs(collection(db, "aboutValues"));
+    const doc = snap.docs.find((d) => d.data().slug === slug);
+    if (!doc) return null;
+    return { id: doc.id, ...doc.data() } as AboutValue;
 }
 

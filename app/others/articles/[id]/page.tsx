@@ -46,7 +46,7 @@ export default function ArticleDetailPage() {
         <>
             {/* ── HERO IMAGE ── */}
             {article.imgSrc && (
-                <div className="w-full h-64 sm:h-96 md:h-[480px] mt-16 md:mt-20 relative">
+                <div className="w-full h-64 sm:h-96 md:h-120 mt-16 md:mt-20 relative">
                     <Image src={article.imgSrc} alt={article.title} fill className="object-cover" priority />
                     <div className="absolute inset-0 bg-black/40" />
                     <div className="absolute bottom-8 left-0 right-0 w-300 mx-auto px-4">

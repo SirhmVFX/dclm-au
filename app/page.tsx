@@ -1,7 +1,7 @@
 "use client";
 
 import CTA from "@/components/CTA";
-import LinkButton from "@/components/LinkButton";
+import LinkButton2 from "@/components/LinkButton2";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -138,7 +138,7 @@ export default function Home() {
           <p className="text-sm md:text-lg text-white/90 leading-relaxed w-full sm:w-2/3">
             {heroSlides[currentSlide]?.sub}
           </p>
-          <LinkButton title="Get to know us" />
+          <LinkButton2 title="Get to know us" href="/about-us" />
         </div>
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-3">
           {heroSlides.map((_, i) => (
@@ -157,15 +157,17 @@ export default function Home() {
             <h1 className="text-3xl md:text-[50px] leading-tight md:leading-none">
               {whoWeAre?.heading ?? "We are dedicated to raising saintly intellectuals that make positive impacts"}
             </h1>
-            <LinkButton title="About DLCF" />
+            <LinkButton2 title="About DLCF" href="/about-us" />
           </div>
           <div>
-            <Image
-              width={800} height={600}
-              src={whoWeAre?.image || "/assets/heroimage1.jpg"}
-              alt="About DLCF"
-              className="w-full h-full object-cover"
-            />
+            <div className="relative w-full h-100 overflow-hidden">
+              <Image
+                fill
+                src={whoWeAre?.image || "/assets/heroimage1.jpg"}
+                alt="About DLCF"
+                className="object-cover"
+              />
+            </div>
             <div className="p-6 md:p-8 bg-primary text-white space-y-4">
               <p>{whoWeAre?.description ?? "DLCF Australia is an inter-denominational fellowship, embracing campus Christians who share the same doctrinal belief irrespective of their denominations and affiliations."}</p>
               <Link href="/about-us" className="text-blue-300 hover:underline">Learn More</Link>
@@ -199,7 +201,7 @@ export default function Home() {
               </h1>
             </div>
             <div className="flex items-end justify-start sm:justify-end">
-              <LinkButton title="About DLCF" />
+              <LinkButton2 title="About DLCF" href="/about-us" />
             </div>
           </div>
 
@@ -217,8 +219,8 @@ export default function Home() {
                 <Link href="/about-us" className="text-blue-300 hover:underline mt-4 inline-block">Learn More</Link>
               </div>
             ))}
-            <div className="relative hidden md:block">
-              <Image width={600} height={600} src="/assets/1.jpg" alt="Fellowship image" className="w-full h-full object-cover" />
+            <div className="relative hidden md:block h-full min-h-64 overflow-hidden">
+              <Image fill src="/assets/1.jpg" alt="Fellowship image" className="object-cover" />
               <div className="p-2 bg-primary text-white top-10 left-10 absolute"><p>Discipline</p></div>
               <div className="p-2 bg-primary text-white top-20 left-20 absolute"><p>Dignity</p></div>
               <div className="p-2 bg-primary text-white left-10 top-36 absolute"><p>Excellence</p></div>
@@ -231,7 +233,7 @@ export default function Home() {
               <p>Our Benefits</p>
               <div className="space-y-4">
                 <p>Discover the advantages of choosing DLCF Australia for your spiritual growth and community engagement.</p>
-                <LinkButton title="Our Approach" />
+                <LinkButton2 title="Our Approach" href="/about-us" />
               </div>
             </div>
             <div className="md:col-span-3">
@@ -257,8 +259,8 @@ export default function Home() {
                   </div>
                 );
               })}
-              <div className="w-full h-48 md:h-75">
-                <Image width={800} height={400} src="/assets/3.jpg" alt="Fellowship" className="w-full h-full object-cover" />
+              <div className="relative w-full h-48 md:h-75 overflow-hidden">
+                <Image fill src="/assets/3.jpg" alt="Fellowship" className="object-cover" />
               </div>
             </div>
           </div>
@@ -281,7 +283,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <div className="hidden md:block">
+            <div className="hidden md:block relative overflow-hidden">
               <Image width={600} height={800} src="/assets/dlclogo.png" alt="DLCF Logo" className="w-full h-full object-contain" />
             </div>
             <div className="space-y-4">
@@ -306,12 +308,14 @@ export default function Home() {
           {testimonials.map((testimonial, i) => (
             <div key={testimonial.id ?? i} className="border border-gray-300 p-5 md:p-6">
               <div className="flex items-center gap-4 mb-4">
-                <Image
-                  width={64} height={64}
-                  src={testimonial.imgSrc || "/assets/1.jpg"}
-                  alt={testimonial.name}
-                  className="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover"
-                />
+                <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden shrink-0">
+                  <Image
+                    fill
+                    src={testimonial.imgSrc || "/assets/1.jpg"}
+                    alt={testimonial.name}
+                    className="object-cover"
+                  />
+                </div>
                 <div>
                   <h2 className="text-base md:text-lg font-semibold">{testimonial.name}</h2>
                   <p className="text-sm text-gray-500">{testimonial.role}</p>

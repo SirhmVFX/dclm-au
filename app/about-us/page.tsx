@@ -3,9 +3,9 @@
 import CTA from "@/components/CTA";
 import FAQ from "@/components/FAQ";
 import Leaders from "@/components/Leaders";
-import LinkButton from "@/components/LinkButton";
 import { useReveal } from "@/components/useReveal";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
     getAboutHero, getAboutIntro, getAboutMissionVision,
@@ -29,17 +29,16 @@ const FALLBACK_STEPS: AboutProcessStep[] = [
 ];
 
 const FALLBACK_VALUES: AboutValue[] = [
-    { label: "Dignity", description: "We uphold the dignity of every individual as a bearer of the image of God, worthy of respect and love.", image: "/assets/4.jpg", order: 1 },
-    { label: "Excellence", description: "We pursue excellence in both spiritual and academic life, believing a saintly intellectual honours God in all areas.", image: "/assets/4.jpg", order: 2 },
-    { label: "Faith", description: "We are grounded in the faith once delivered to the saints, standing firm on the Word of God without compromise.", image: "/assets/4.jpg", order: 3 },
-    { label: "Unity & Love", description: "We are united in love across denominations, building a fellowship where every believer belongs and thrives.", image: "/assets/4.jpg", order: 4 },
+    { slug: "dignity", label: "Dignity", description: "We uphold the dignity of every individual as a bearer of the image of God, worthy of respect and love.", image: "/assets/4.jpg", order: 1 },
+    { slug: "excellence", label: "Excellence", description: "We pursue excellence in both spiritual and academic life, believing a saintly intellectual honours God in all areas.", image: "/assets/4.jpg", order: 2 },
+    { slug: "faith", label: "Faith", description: "We are grounded in the faith once delivered to the saints, standing firm on the Word of God without compromise.", image: "/assets/4.jpg", order: 3 },
+    { slug: "unity-and-love", label: "Unity & Love", description: "We are united in love across denominations, building a fellowship where every believer belongs and thrives.", image: "/assets/4.jpg", order: 4 },
 ];
 
 function AboutUsPage() {
     const heroRef = useReveal("animate-fade-up");
     const missionRef = useReveal("animate-fade-up");
     const processRef = useReveal("animate-fade-up");
-    const valuesRef = useReveal("animate-fade-up");
     const statsRef = useReveal("animate-fade-up");
 
     const [hero, setHero] = useState<AboutHero | null>(null);
@@ -80,12 +79,13 @@ function AboutUsPage() {
                         {hero?.heading ?? "We work in unity and love to touch lives for Christ."}
                     </h1>
                 </div>
-                <div className="w-full h-56 sm:h-96 md:h-176">
+                <div className="w-full h-56 sm:h-96 md:h-176 relative overflow-hidden">
                     <Image
-                        width={1600} height={900}
+                        fill
                         src={hero?.image || "/assets/2.jpg"}
                         alt="About Us Image"
-                        className="w-full h-full object-cover"
+                        className="object-cover"
+                        priority
                     />
                 </div>
             </section>
@@ -149,12 +149,12 @@ function AboutUsPage() {
                                 ))}
                             </div>
                         </div>
-                        <div className="hidden md:block">
+                        <div className="hidden md:block relative h-full min-h-96">
                             <Image
-                                width={800} height={900}
+                                fill
                                 src={howWeWork?.image || "/assets/6.jpg"}
                                 alt="How We Work"
-                                className="w-full h-full object-cover"
+                                className="object-cover"
                             />
                         </div>
                     </div>
@@ -164,24 +164,32 @@ function AboutUsPage() {
             {/* ── VALUES GRID ── */}
             <section>
                 <div className="w-300 mx-auto py-12 md:py-20 px-0">
-                    <div ref={valuesRef} className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-16">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-16">
                         {values.map((item, i) => (
-                            <div key={item.id ?? i} className={`relative w-full h-64 md:h-80 overflow-hidden reveal delay-${(i % 2 + 1) * 200}`}>
-                                <Image
-                                    width={800} height={600}
-                                    src={item.image || "/assets/4.jpg"}
-                                    alt={item.label}
-                                    className="w-full h-full object-cover"
-                                />
+                            <Link
+                                key={item.id ?? i}
+                                href={item.slug ? `/about-us/values/${item.slug}` : "#"}
+                                className="relative w-full h-64 md:h-80 overflow-hidden block group"
+                            >
+                                <div className="absolute inset-0">
+                                    <Image
+                                        src={item.image || "/assets/4.jpg"}
+                                        alt={item.label}
+                                        fill
+                                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                    />
+                                </div>
                                 <div className="absolute inset-0 bg-black/50" />
                                 <div className="absolute inset-0 flex flex-col justify-between items-start text-white p-6 md:p-8">
                                     <div>
                                         <h3 className="text-2xl md:text-3xl font-semibold mb-2">{item.label}</h3>
                                         <p className="text-gray-200 text-sm md:text-base">{item.description}</p>
                                     </div>
-                                    <LinkButton title="Learn More" />
+                                    <span className="text-blue-300 text-sm font-medium group-hover:underline">
+                                        Learn More →
+                                    </span>
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </div>
