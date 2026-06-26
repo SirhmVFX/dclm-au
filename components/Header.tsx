@@ -40,7 +40,7 @@ function Header() {
         { id: 4.1, link: "/bible-review-series/snippets", name: "Snippets" },
         { id: 4.2, link: "/others/articles", name: "Articles" },
         { id: 4.3, link: "/bible-review-series/teachings", name: "Teachings" },
-        { id: 4.4, link: "https://www.dailymanna.app/", name: "Daily Manna" },
+        { id: 4.4, link: "/daily-manna", name: "Daily Manna" },
       ],
     },
 

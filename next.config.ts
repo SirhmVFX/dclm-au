@@ -36,6 +36,12 @@ const nextConfig: NextConfig = {
         hostname: "lh6.googleusercontent.com",
         pathname: "/**",
       },
+      // YouTube thumbnails
+      {
+        protocol: "https",
+        hostname: "img.youtube.com",
+        pathname: "/**",
+      },
     ],
   },
 };

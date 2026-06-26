@@ -3,11 +3,24 @@
 import CTA from "@/components/CTA";
 import FAQ from "@/components/FAQ";
 import Leaders from "@/components/Leaders";
+import Pagination from "@/components/Pagination";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { BiChevronRight } from "react-icons/bi";
-import { getPublishedSnippets, Snippet } from "@/lib/firestore";
+import { MdFacebook, MdOpenInNew } from "react-icons/md";
+import {
+  getPublishedSnippets,
+  getPublishedFacebookPosts,
+  type Snippet,
+  type FacebookPost,
+} from "@/lib/firestore";
+
+type Tab = "reflections" | "facebook";
+
+const ITEMS_PER_PAGE = 9;
+const FB_ITEMS_PER_PAGE = 9;
 
 const FALLBACK_SNIPPETS: Snippet[] = [
   { img: "/assets/9.jpg", title: "Choose to Trust in God", description: "A reflection on what it means to place your complete trust in God in every situation of life.", content: "", published: true },
@@ -17,19 +30,60 @@ const FALLBACK_SNIPPETS: Snippet[] = [
 ];
 
 function SnippetsPage() {
-  const [snippets, setSnippets] = useState<Snippet[]>([]);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const activeTab = (searchParams.get("tab") as Tab) === "facebook" ? "facebook" : "reflections";
+  const currentPage = Number(searchParams.get("page") ?? "1");
+
+  const [allSnippets, setAllSnippets] = useState<Snippet[]>([]);
+  const [fbPosts, setFbPosts] = useState<FacebookPost[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getPublishedSnippets()
-      .then((data) => setSnippets(data.length > 0 ? data : FALLBACK_SNIPPETS))
-      .catch(() => setSnippets(FALLBACK_SNIPPETS))
+    Promise.all([getPublishedSnippets(), getPublishedFacebookPosts()])
+      .then(([snips, posts]) => {
+        setAllSnippets(snips.length > 0 ? snips : FALLBACK_SNIPPETS);
+        setFbPosts(posts);
+      })
+      .catch(() => {
+        setAllSnippets(FALLBACK_SNIPPETS);
+        setFbPosts([]);
+      })
       .finally(() => setLoading(false));
   }, []);
 
+  // Snippets pagination
+  const totalSnippetPages = Math.ceil(allSnippets.length / ITEMS_PER_PAGE);
+  const safeSnippetPage = Math.min(Math.max(currentPage, 1), Math.max(totalSnippetPages, 1));
+  const snippetPageItems = allSnippets.slice(
+    (safeSnippetPage - 1) * ITEMS_PER_PAGE,
+    safeSnippetPage * ITEMS_PER_PAGE
+  );
+
+  // Facebook pagination
+  const totalFbPages = Math.ceil(fbPosts.length / FB_ITEMS_PER_PAGE);
+  const safeFbPage = Math.min(Math.max(currentPage, 1), Math.max(totalFbPages, 1));
+  const fbPageItems = fbPosts.slice(
+    (safeFbPage - 1) * FB_ITEMS_PER_PAGE,
+    safeFbPage * FB_ITEMS_PER_PAGE
+  );
+
+  function setTab(tab: Tab) {
+    const params = new URLSearchParams();
+    if (tab !== "reflections") params.set("tab", tab);
+    router.push(`?${params.toString()}`, { scroll: false });
+  }
+
+  function setPage(page: number) {
+    const params = new URLSearchParams(searchParams.toString());
+    if (page === 1) params.delete("page"); else params.set("page", String(page));
+    router.push(`?${params.toString()}`, { scroll: true });
+  }
+
   return (
     <>
-      {/* ── HERO ── */}
+      {/* HERO */}
       <section className="pt-32">
         <div className="w-300 mx-auto flex flex-col sm:flex-row justify-between gap-6 mb-12 md:mb-16">
           <div>
@@ -45,42 +99,154 @@ function SnippetsPage() {
         </div>
       </section>
 
-      {/* ── SNIPPETS GRID ── */}
+      {/* TABS */}
       <section>
-        <div className="w-300 mx-auto py-12 md:py-20">
-          {loading ? (
-            <p className="text-center text-gray-400 text-sm py-20">Loading snippets…</p>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 md:gap-12">
-              {snippets.map((snippet, index) => (
-                <Link
-                  key={snippet.id ?? index}
-                  href={snippet.id ? `/bible-review-series/snippets/${snippet.id}` : "#"}
-                  className="border border-gray-300 bg-white hover:shadow-md transition-shadow block"
-                >
-                  <div className="relative w-full h-48 overflow-hidden">
-                    <Image
-                      fill
-                      src={snippet.img || "/assets/9.jpg"}
-                      alt={snippet.title}
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold text-gray-900">{snippet.title}</h3>
-                      <BiChevronRight className="h-6 w-6 text-gray-400 shrink-0" />
-                    </div>
-                    <p className="text-gray-600">{snippet.description}</p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
+        <div className="w-300 mx-auto">
+          <div className="flex border-b border-gray-200">
+            <button
+              onClick={() => setTab("reflections")}
+              className={`px-6 py-3 text-sm font-medium border-b-2 -mb-px transition-colors ${activeTab === "reflections"
+                ? "border-primary text-primary"
+                : "border-transparent text-gray-500 hover:text-gray-700"
+                }`}
+            >
+              Reflections
+            </button>
+            <button
+              onClick={() => setTab("facebook")}
+              className={`px-6 py-3 text-sm font-medium border-b-2 -mb-px transition-colors flex items-center gap-2 ${activeTab === "facebook"
+                ? "border-primary text-primary"
+                : "border-transparent text-gray-500 hover:text-gray-700"
+                }`}
+            >
+              <MdFacebook size={16} className={activeTab === "facebook" ? "text-[#1877F2]" : "text-gray-400"} />
+              Facebook Posts
+              {fbPosts.length > 0 && (
+                <span className="text-xs bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded-sm font-semibold">
+                  {fbPosts.length}
+                </span>
+              )}
+            </button>
+          </div>
         </div>
       </section>
 
-      {/* ── BANNER ── */}
+      {/* REFLECTIONS TAB */}
+      {activeTab === "reflections" && (
+        <section>
+          <div className="w-300 mx-auto py-12 md:py-20">
+            {loading ? (
+              <p className="text-center text-gray-400 text-sm py-20">Loading snippets…</p>
+            ) : allSnippets.length === 0 ? (
+              <p className="text-center text-gray-400 text-sm py-20">No snippets yet.</p>
+            ) : (
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 md:gap-12">
+                  {snippetPageItems.map((snippet, index) => (
+                    <Link
+                      key={snippet.id ?? index}
+                      href={snippet.id ? `/bible-review-series/snippets/${snippet.id}` : "#"}
+                      className="border border-gray-300 bg-white hover:shadow-md transition-shadow block"
+                    >
+                      <div className="relative w-full h-48 overflow-hidden">
+                        <Image fill src={snippet.img || "/assets/9.jpg"} alt={snippet.title} className="object-cover" />
+                      </div>
+                      <div className="p-6">
+                        <div className="flex items-center justify-between mb-4">
+                          <h3 className="text-lg font-semibold text-gray-900">{snippet.title}</h3>
+                          <BiChevronRight className="h-6 w-6 text-gray-400 shrink-0" />
+                        </div>
+                        <p className="text-gray-600">{snippet.description}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+                <Pagination
+                  currentPage={safeSnippetPage}
+                  totalPages={totalSnippetPages}
+                  onPageChange={setPage}
+                />
+              </>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* FACEBOOK POSTS TAB */}
+      {activeTab === "facebook" && (
+        <section>
+          <div className="w-300 mx-auto py-12 md:py-20">
+            {loading ? (
+              <p className="text-center text-gray-400 text-sm py-20">Loading posts…</p>
+            ) : fbPosts.length === 0 ? (
+              <div className="text-center py-20 space-y-3">
+                <MdFacebook size={48} className="mx-auto text-gray-200" />
+                <p className="text-gray-400 text-sm">No Facebook posts have been added yet.</p>
+              </div>
+            ) : (
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                  {fbPageItems.map((post) => (
+                    <a
+                      key={post.id}
+                      href={post.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="border border-gray-200 bg-white hover:shadow-md transition-shadow flex flex-col group"
+                    >
+                      {/* Cover image if uploaded */}
+                      {post.image ? (
+                        <div className="relative w-full h-48 overflow-hidden shrink-0">
+                          <Image
+                            fill
+                            src={post.image}
+                            alt={post.caption || "Facebook post"}
+                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                      ) : (
+                        /* No image — Facebook blue placeholder */
+                        <div className="w-full h-16 bg-[#1877F2] flex items-center justify-center shrink-0">
+                          <MdFacebook size={32} className="text-white/80" />
+                        </div>
+                      )}
+
+                      {/* Card body */}
+                      <div className="p-5 flex-1 flex flex-col gap-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-7 h-7 bg-[#1877F2] flex items-center justify-center shrink-0">
+                            <MdFacebook size={16} className="text-white" />
+                          </div>
+                          <span className="text-xs font-semibold text-gray-700">DLCF Australia</span>
+                        </div>
+
+                        {post.caption && (
+                          <p className="text-sm text-gray-700 leading-relaxed line-clamp-5 flex-1">
+                            {post.caption}
+                          </p>
+                        )}
+
+                        <div className="flex items-center justify-end pt-2 border-t border-gray-100">
+                          <span className="text-xs font-semibold text-[#1877F2] flex items-center gap-1 group-hover:underline">
+                            View on Facebook <MdOpenInNew size={12} />
+                          </span>
+                        </div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+                <Pagination
+                  currentPage={safeFbPage}
+                  totalPages={totalFbPages}
+                  onPageChange={setPage}
+                />
+              </>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* BANNER */}
       <section className="w-full h-64 sm:h-96 md:h-124 relative overflow-hidden">
         <Image fill src="/assets/12.jpg" alt="Bible Review Series" className="object-cover" />
         <div className="absolute inset-x-4 sm:inset-auto sm:left-[10%] sm:w-105 top-8 sm:top-12 md:top-20 bg-primary/35 text-white p-5 md:p-6 z-10">

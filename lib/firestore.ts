@@ -25,6 +25,15 @@ export interface HeroSlide {
     updatedAt?: Timestamp;
 }
 
+export interface ArticleCategory {
+    id?: string;
+    name: string;
+    slug: string;
+    description: string;
+    order: number;
+    active: boolean;
+}
+
 export interface Article {
     id?: string;
     title: string;
@@ -35,6 +44,7 @@ export interface Article {
     readingTime: string;
     published: boolean;
     featured: boolean;
+    categoryIds: string[];
     createdAt?: Timestamp;
     updatedAt?: Timestamp;
 }
@@ -50,6 +60,11 @@ export interface Snippet {
     updatedAt?: Timestamp;
 }
 
+export interface YoutubeLink {
+    title: string;
+    url: string;
+}
+
 export interface Teaching {
     id?: string;
     title: string;
@@ -60,6 +75,7 @@ export interface Teaching {
     date: string;
     imgSrc: string;
     published: boolean;
+    youtubeLinks: YoutubeLink[];
     createdAt?: Timestamp;
     updatedAt?: Timestamp;
 }
@@ -150,6 +166,15 @@ async function getOne<T>(col: string, id: string): Promise<T | null> {
 // Hero Slides
 export const getHeroSlides = () => getOrdered<HeroSlide>("heroSlides");
 
+// Article Categories — only active, ordered by order field
+export async function getActiveArticleCategories(): Promise<ArticleCategory[]> {
+    const snap = await getDocs(collection(db, "articleCategories"));
+    return snap.docs
+        .map((d) => ({ id: d.id, ...d.data() } as ArticleCategory))
+        .filter((c) => c.active)
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+}
+
 // Articles — only published, ordered by createdAt newest first
 export async function getPublishedArticles(): Promise<Article[]> {
     const snap = await getDocs(collection(db, "articles"));
@@ -163,7 +188,38 @@ export async function getPublishedArticles(): Promise<Article[]> {
         });
 }
 
+// Articles filtered by category slug
+export async function getPublishedArticlesByCategory(slug: string): Promise<Article[]> {
+    const [articles, cats] = await Promise.all([
+        getPublishedArticles(),
+        getActiveArticleCategories(),
+    ]);
+    const cat = cats.find((c) => c.slug === slug);
+    if (!cat?.id) return [];
+    return articles.filter((a) => (a.categoryIds ?? []).includes(cat.id!));
+}
+
 export const getArticle = (id: string) => getOne<Article>("articles", id);
+
+export interface FacebookPost {
+    id?: string;
+    url: string;
+    caption: string;
+    image: string;
+    published: boolean;
+    order: number;
+    createdAt?: Timestamp;
+    updatedAt?: Timestamp;
+}
+
+// Facebook Posts — only published
+export async function getPublishedFacebookPosts(): Promise<FacebookPost[]> {
+    const snap = await getDocs(collection(db, "facebookPosts"));
+    return snap.docs
+        .map((d) => ({ id: d.id, ...d.data() } as FacebookPost))
+        .filter((p) => p.published)
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+}
 
 // Snippets — only published
 export async function getPublishedSnippets(): Promise<Snippet[]> {
