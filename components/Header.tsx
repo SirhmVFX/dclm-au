@@ -37,20 +37,13 @@ function Header() {
       name: "Resources",
       isDropdown: true,
       dropdownItems: [
-        { id: 4.1, link: "https://www.dailymanna.app/", name: "Daily Manna" },
+        { id: 4.1, link: "/bible-review-series/snippets", name: "Snippets" },
         { id: 4.2, link: "/others/articles", name: "Articles" },
+        { id: 4.3, link: "/bible-review-series/teachings", name: "Teachings" },
+        { id: 4.4, link: "https://www.dailymanna.app/", name: "Daily Manna" },
       ],
     },
-    {
-      id: 5,
-      name: "Others",
-      isDropdown: true,
-      dropdownItems: [
-        { id: 5.1, link: "/bible-review-series/snippets", name: "Snippets" },
-        { id: 5.2, link: "/bible-review-series/teachings", name: "Teachings" },
 
-      ],
-    },
   ];
 
   useEffect(() => {
@@ -72,7 +65,7 @@ function Header() {
           <Link href="/" className="flex items-center gap-3">
             <div className="relative h-12 w-12">
               <Image
-                src="/assets/dlclogo.png"
+                src="/assets/deeperlife-logo.png"
                 alt="DCLM AU Logo"
                 width={100}
                 height={100}

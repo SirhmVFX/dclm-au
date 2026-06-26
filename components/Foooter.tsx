@@ -25,7 +25,7 @@ function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-4">
-              <Image src="/assets/dlclogo.png" alt="DCLM AU Logo" width={80} height={80} className="h-16 w-16" />
+              <Image src="/assets/deeperlife-logo.png" alt="DCLM AU Logo" width={80} height={80} className="h-16 w-16" />
               <div>
                 <p className="text-xs uppercase tracking-[0.35em] text-blue-200">Deeper Life Campus Fellowship</p>
                 <h2 className="text-xl font-semibold">Australia</h2>

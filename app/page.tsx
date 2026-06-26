@@ -290,7 +290,7 @@ export default function Home() {
               ))}
             </div>
             <div className="hidden md:block relative overflow-hidden">
-              <Image width={600} height={800} src="/assets/dlclogo.png" alt="DLCF Logo" className="w-full h-full object-contain" />
+              <Image width={600} height={800} src="/assets/deeperlife-logo.png" alt="DLCF Logo" className="w-full h-full object-contain" />
             </div>
             <div className="space-y-4">
               {achRight.map((ach, i) => (
