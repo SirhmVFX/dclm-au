@@ -4,7 +4,7 @@ import CTA from "@/components/CTA";
 import Pagination from "@/components/Pagination";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { getPublishedTeachings, Teaching } from "@/lib/firestore";
 import { MdVideoLibrary } from "react-icons/md";
@@ -125,4 +125,10 @@ function Teachings() {
     );
 }
 
-export default Teachings;
+export default function TeachingsPageWrapper() {
+    return (
+        <Suspense fallback={<div className="min-h-screen" />}>
+            <Teachings />
+        </Suspense>
+    );
+}

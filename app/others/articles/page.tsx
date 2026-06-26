@@ -4,7 +4,7 @@ import CTA from "@/components/CTA";
 import Pagination from "@/components/Pagination";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import {
     getPublishedArticles,
@@ -106,8 +106,8 @@ function Articles() {
                             <button
                                 onClick={() => setCategory("all")}
                                 className={`px-4 py-1.5 text-sm border transition-colors ${activeSlug === "all"
-                                        ? "bg-primary text-white border-primary"
-                                        : "bg-white text-gray-600 border-gray-300 hover:border-primary hover:text-primary"
+                                    ? "bg-primary text-white border-primary"
+                                    : "bg-white text-gray-600 border-gray-300 hover:border-primary hover:text-primary"
                                     }`}
                             >
                                 All
@@ -117,8 +117,8 @@ function Articles() {
                                     key={cat.id}
                                     onClick={() => setCategory(cat.slug)}
                                     className={`px-4 py-1.5 text-sm border transition-colors ${activeSlug === cat.slug
-                                            ? "bg-primary text-white border-primary"
-                                            : "bg-white text-gray-600 border-gray-300 hover:border-primary hover:text-primary"
+                                        ? "bg-primary text-white border-primary"
+                                        : "bg-white text-gray-600 border-gray-300 hover:border-primary hover:text-primary"
                                         }`}
                                 >
                                     {cat.name}
@@ -235,4 +235,10 @@ function Articles() {
     );
 }
 
-export default Articles;
+export default function ArticlesPageWrapper() {
+    return (
+        <Suspense fallback={<div className="min-h-screen" />}>
+            <Articles />
+        </Suspense>
+    );
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -50,7 +50,7 @@ function getYoutubeEmbedId(raw: string): string | null {
     return null;
 }
 
-export default function TeachingDetailPage() {
+function TeachingDetailPage() {
     const { id } = useParams<{ id: string }>();
     const searchParams = useSearchParams();
     const [teaching, setTeaching] = useState<Teaching | null>(null);
@@ -287,5 +287,13 @@ function RecordingsPanel({ links }: { links: Teaching["youtubeLinks"] }) {
                 </div>
             )}
         </div>
+    );
+}
+
+export default function TeachingDetailPageWrapper() {
+    return (
+        <Suspense fallback={<div className="min-h-screen" />}>
+            <TeachingDetailPage />
+        </Suspense>
     );
 }

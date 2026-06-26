@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -58,19 +58,16 @@ export const metadata: Metadata = {
     creator: "@dclmau",
     site: "@dclmau",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-  },
-  verification: {
-    google: "your-google-verification-code", // Add your Google Search Console code
-    // other verification codes as needed
-  },
   alternates: {
     canonical: "https://dlcfau.dclm-au.org",
   },
   category: "religion",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export default function RootLayout({

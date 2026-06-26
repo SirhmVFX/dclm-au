@@ -6,7 +6,7 @@ import Leaders from "@/components/Leaders";
 import Pagination from "@/components/Pagination";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { BiChevronRight } from "react-icons/bi";
 import { MdFacebook, MdOpenInNew } from "react-icons/md";
@@ -265,4 +265,10 @@ function SnippetsPage() {
   );
 }
 
-export default SnippetsPage;
+export default function SnippetsPageWrapper() {
+  return (
+    <Suspense fallback={<div className="min-h-screen" />}>
+      <SnippetsPage />
+    </Suspense>
+  );
+}
