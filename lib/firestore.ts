@@ -49,6 +49,15 @@ export interface Article {
     updatedAt?: Timestamp;
 }
 
+export interface SnippetCategory {
+    id?: string;
+    name: string;
+    slug: string;
+    description: string;
+    order: number;
+    active: boolean;
+}
+
 export interface Snippet {
     id?: string;
     title: string;
@@ -56,8 +65,27 @@ export interface Snippet {
     content: string;
     img: string;
     published: boolean;
+    categoryIds: string[];
     createdAt?: Timestamp;
     updatedAt?: Timestamp;
+}
+
+export interface TeachingCategory {
+    id?: string;
+    name: string;
+    slug: string;
+    description: string;
+    order: number;
+    active: boolean;
+}
+
+export interface TeachingSubCategory {
+    id?: string;
+    name: string;
+    slug: string;
+    categoryId: string;
+    order: number;
+    active: boolean;
 }
 
 export interface YoutubeLink {
@@ -76,6 +104,7 @@ export interface Teaching {
     imgSrc: string;
     published: boolean;
     youtubeLinks: YoutubeLink[];
+    subCategoryId: string;
     createdAt?: Timestamp;
     updatedAt?: Timestamp;
 }
@@ -221,6 +250,15 @@ export async function getPublishedFacebookPosts(): Promise<FacebookPost[]> {
         .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 }
 
+// Snippet Categories — only active
+export async function getActiveSnippetCategories(): Promise<SnippetCategory[]> {
+    const snap = await getDocs(collection(db, "snippetCategories"));
+    return snap.docs
+        .map((d) => ({ id: d.id, ...d.data() } as SnippetCategory))
+        .filter((c) => c.active)
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+}
+
 // Snippets — only published
 export async function getPublishedSnippets(): Promise<Snippet[]> {
     const snap = await getDocs(collection(db, "snippets"));
@@ -235,6 +273,24 @@ export async function getPublishedSnippets(): Promise<Snippet[]> {
 }
 
 export const getSnippet = (id: string) => getOne<Snippet>("snippets", id);
+
+// Teaching Categories — only active
+export async function getActiveTeachingCategories(): Promise<TeachingCategory[]> {
+    const snap = await getDocs(collection(db, "teachingCategories"));
+    return snap.docs
+        .map((d) => ({ id: d.id, ...d.data() } as TeachingCategory))
+        .filter((c) => c.active)
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+}
+
+// Teaching Subcategories — only active
+export async function getActiveTeachingSubCategories(): Promise<TeachingSubCategory[]> {
+    const snap = await getDocs(collection(db, "teachingSubCategories"));
+    return snap.docs
+        .map((d) => ({ id: d.id, ...d.data() } as TeachingSubCategory))
+        .filter((c) => c.active)
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+}
 
 // Teachings — only published
 export async function getPublishedTeachings(): Promise<Teaching[]> {

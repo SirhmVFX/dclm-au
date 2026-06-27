@@ -13,8 +13,10 @@ import { MdFacebook, MdOpenInNew } from "react-icons/md";
 import {
   getPublishedSnippets,
   getPublishedFacebookPosts,
+  getActiveSnippetCategories,
   type Snippet,
   type FacebookPost,
+  type SnippetCategory,
 } from "@/lib/firestore";
 
 type Tab = "reflections" | "facebook";
@@ -23,10 +25,10 @@ const ITEMS_PER_PAGE = 9;
 const FB_ITEMS_PER_PAGE = 9;
 
 const FALLBACK_SNIPPETS: Snippet[] = [
-  { img: "/assets/9.jpg", title: "Choose to Trust in God", description: "A reflection on what it means to place your complete trust in God in every situation of life.", content: "", published: true },
-  { img: "/assets/6.jpg", title: "Forgiveness", description: "Exploring the power and necessity of forgiveness as taught and modelled by our Lord Jesus Christ.", content: "", published: true },
-  { img: "/assets/10.jpg", title: "Believe in God", description: "An encouragement to hold fast to genuine faith in God, especially in the midst of life's challenges.", content: "", published: true },
-  { img: "/assets/8.jpg", title: "Joy as Jesus Comes", description: "Meditating on the joy that believers anticipate as we look forward to the coming of our Lord Jesus Christ.", content: "", published: true },
+  { img: "/assets/9.jpg", title: "Choose to Trust in God", description: "A reflection on what it means to place your complete trust in God in every situation of life.", content: "", published: true, categoryIds: [] },
+  { img: "/assets/6.jpg", title: "Forgiveness", description: "Exploring the power and necessity of forgiveness as taught and modelled by our Lord Jesus Christ.", content: "", published: true, categoryIds: [] },
+  { img: "/assets/10.jpg", title: "Believe in God", description: "An encouragement to hold fast to genuine faith in God, especially in the midst of life's challenges.", content: "", published: true, categoryIds: [] },
+  { img: "/assets/8.jpg", title: "Joy as Jesus Comes", description: "Meditating on the joy that believers anticipate as we look forward to the coming of our Lord Jesus Christ.", content: "", published: true, categoryIds: [] },
 ];
 
 function SnippetsPage() {
@@ -34,29 +36,42 @@ function SnippetsPage() {
   const searchParams = useSearchParams();
 
   const activeTab = (searchParams.get("tab") as Tab) === "facebook" ? "facebook" : "reflections";
+  const activeSlug = searchParams.get("category") ?? "all";
   const currentPage = Number(searchParams.get("page") ?? "1");
 
   const [allSnippets, setAllSnippets] = useState<Snippet[]>([]);
   const [fbPosts, setFbPosts] = useState<FacebookPost[]>([]);
+  const [snippetCategories, setSnippetCategories] = useState<SnippetCategory[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Promise.all([getPublishedSnippets(), getPublishedFacebookPosts()])
-      .then(([snips, posts]) => {
+    Promise.all([getPublishedSnippets(), getPublishedFacebookPosts(), getActiveSnippetCategories()])
+      .then(([snips, posts, cats]) => {
         setAllSnippets(snips.length > 0 ? snips : FALLBACK_SNIPPETS);
         setFbPosts(posts);
+        setSnippetCategories(cats);
       })
       .catch(() => {
         setAllSnippets(FALLBACK_SNIPPETS);
         setFbPosts([]);
+        setSnippetCategories([]);
       })
       .finally(() => setLoading(false));
   }, []);
 
+  // Filter snippets by active category
+  const filteredSnippets = activeSlug === "all"
+    ? allSnippets
+    : (() => {
+      const cat = snippetCategories.find((c) => c.slug === activeSlug);
+      if (!cat?.id) return allSnippets;
+      return allSnippets.filter((s) => (s.categoryIds ?? []).includes(cat.id!));
+    })();
+
   // Snippets pagination
-  const totalSnippetPages = Math.ceil(allSnippets.length / ITEMS_PER_PAGE);
+  const totalSnippetPages = Math.ceil(filteredSnippets.length / ITEMS_PER_PAGE);
   const safeSnippetPage = Math.min(Math.max(currentPage, 1), Math.max(totalSnippetPages, 1));
-  const snippetPageItems = allSnippets.slice(
+  const snippetPageItems = filteredSnippets.slice(
     (safeSnippetPage - 1) * ITEMS_PER_PAGE,
     safeSnippetPage * ITEMS_PER_PAGE
   );
@@ -72,6 +87,13 @@ function SnippetsPage() {
   function setTab(tab: Tab) {
     const params = new URLSearchParams();
     if (tab !== "reflections") params.set("tab", tab);
+    router.push(`?${params.toString()}`, { scroll: false });
+  }
+
+  function setCategory(slug: string) {
+    const params = new URLSearchParams(searchParams.toString());
+    if (slug === "all") params.delete("category"); else params.set("category", slug);
+    params.delete("page");
     router.push(`?${params.toString()}`, { scroll: false });
   }
 
@@ -135,10 +157,33 @@ function SnippetsPage() {
       {activeTab === "reflections" && (
         <section>
           <div className="w-300 mx-auto py-12 md:py-20">
+            {/* Category filter — only shown when categories exist */}
+            {!loading && snippetCategories.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-8">
+                <button
+                  onClick={() => setCategory("all")}
+                  className={`px-4 py-1.5 text-sm border transition-colors ${activeSlug === "all" ? "bg-primary text-white border-primary" : "bg-white text-gray-600 border-gray-300 hover:border-primary hover:text-primary"}`}
+                >
+                  All
+                </button>
+                {snippetCategories.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setCategory(cat.slug)}
+                    className={`px-4 py-1.5 text-sm border transition-colors ${activeSlug === cat.slug ? "bg-primary text-white border-primary" : "bg-white text-gray-600 border-gray-300 hover:border-primary hover:text-primary"}`}
+                  >
+                    {cat.name}
+                  </button>
+                ))}
+              </div>
+            )}
+
             {loading ? (
               <p className="text-center text-gray-400 text-sm py-20">Loading snippets…</p>
-            ) : allSnippets.length === 0 ? (
-              <p className="text-center text-gray-400 text-sm py-20">No snippets yet.</p>
+            ) : filteredSnippets.length === 0 ? (
+              <p className="text-center text-gray-400 text-sm py-20">
+                {activeSlug !== "all" ? "No snippets in this category yet." : "No snippets yet."}
+              </p>
             ) : (
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 md:gap-12">
@@ -156,6 +201,16 @@ function SnippetsPage() {
                           <h3 className="text-lg font-semibold text-gray-900">{snippet.title}</h3>
                           <BiChevronRight className="h-6 w-6 text-gray-400 shrink-0" />
                         </div>
+                        {snippet.categoryIds?.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mb-2">
+                            {snippet.categoryIds.map((cid) => {
+                              const cat = snippetCategories.find((c) => c.id === cid);
+                              return cat ? (
+                                <span key={cid} className="text-xs px-2 py-0.5 bg-primary/10 text-primary">{cat.name}</span>
+                              ) : null;
+                            })}
+                          </div>
+                        )}
                         <p className="text-gray-600">{snippet.description}</p>
                       </div>
                     </Link>
@@ -265,7 +320,7 @@ function SnippetsPage() {
   );
 }
 
-export default function SnippetsPageWrapper() {
+export default function SnippetssPageWrapper() {
   return (
     <Suspense fallback={<div className="min-h-screen" />}>
       <SnippetsPage />
