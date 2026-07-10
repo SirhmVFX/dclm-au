@@ -109,6 +109,69 @@ export interface Teaching {
     updatedAt?: Timestamp;
 }
 
+export interface EventScheduleItem {
+    day: string;
+    time: string;
+    description: string;
+}
+
+export interface EventSpeaker {
+    name: string;
+    title: string;
+    image: string;
+}
+
+export interface Event {
+    id?: string;
+    title: string;
+    subtitle: string;
+    theme: string;
+    tagline: string;
+    type: string;
+    biblePassage: string;
+    bibleText: string;
+    startDate: string;
+    endDate: string;
+    schedule: EventScheduleItem[];
+    venueName: string;
+    venueAddress: string;
+    venueCity: string;
+    venueMapUrl: string;
+    speakers: EventSpeaker[];
+    featuring: string;
+    targetAudience: string;
+    posterImage: string;
+    bannerImage: string;
+    galleryImages: string[];
+    description: string;
+    highlights: string[];
+    registrationUrl: string;
+    registrationLabel: string;
+    contactPhone: string;
+    contactEmail: string;
+    websiteUrl: string;
+    published: boolean;
+    featured: boolean;
+    status: "upcoming" | "ongoing" | "past";
+    createdAt?: Timestamp;
+    updatedAt?: Timestamp;
+}
+
+// Events — only published
+export async function getPublishedEvents(): Promise<Event[]> {
+    const snap = await getDocs(collection(db, "events"));
+    return snap.docs
+        .map((d) => ({ id: d.id, ...d.data() } as Event))
+        .filter((e) => e.published)
+        .sort((a, b) => {
+            const ta = (a.createdAt as any)?.seconds ?? 0;
+            const tb = (b.createdAt as any)?.seconds ?? 0;
+            return tb - ta;
+        });
+}
+
+export const getEvent = (id: string) => getOne<Event>("events", id);
+
 export interface Testimonial {
     id?: string;
     name: string;

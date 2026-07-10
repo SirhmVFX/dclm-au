@@ -31,16 +31,17 @@ function Header() {
   const navlinks: NavItem[] = [
     { id: 1, link: "/", name: "Home" },
     { id: 2, link: "/about-us", name: "About Us" },
-    { id: 3, link: "/contact-us", name: "Contact Us" },
+    { id: 3, link: "/events", name: "Events" },
+    { id: 4, link: "/contact-us", name: "Contact Us" },
     {
-      id: 4,
+      id: 5,
       name: "Resources",
       isDropdown: true,
       dropdownItems: [
-        { id: 4.1, link: "/bible-review-series/snippets", name: "Snippets" },
-        { id: 4.2, link: "/others/articles", name: "Articles" },
-        { id: 4.3, link: "/bible-review-series/teachings", name: "Teachings" },
-        { id: 4.4, link: "/daily-manna", name: "Daily Manna" },
+        { id: 5.1, link: "/bible-review-series/snippets", name: "Snippets" },
+        { id: 5.2, link: "/others/articles", name: "Articles" },
+        { id: 5.3, link: "/bible-review-series/teachings", name: "Teachings" },
+        { id: 5.4, link: "/daily-manna", name: "Daily Manna" },
       ],
     },
 
