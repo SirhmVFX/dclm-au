@@ -8,7 +8,7 @@ function DailyManna() {
 
                 <iframe
                     src="https://www.dailymanna.app/"
-                    className="w-full h-[800px] "
+                    className="w-full h-200 "
                     title="Daily Manna"
                 />
             </div>
