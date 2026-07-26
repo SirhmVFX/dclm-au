@@ -495,6 +495,7 @@ export interface Service {
     icon: string;
     description: string;
     order: number;
+    url?: string;
 }
 
 export interface Benefit {
@@ -645,3 +646,34 @@ export async function getAboutValueBySlug(slug: string): Promise<AboutValue | nu
     return { id: found.id, ...found.data() } as AboutValue;
 }
 
+
+// ── Doctrines ─────────────────────────────────────────────
+
+export interface Doctrine {
+    id?: string;
+    title: string;
+    description: string;
+    content: string; // HTML from WYSIWYG
+    imgSrc: string;
+    date: string;
+    readingTime: string;
+    published: boolean;
+    featured: boolean;
+    createdAt?: Timestamp;
+    updatedAt?: Timestamp;
+}
+
+// Doctrines — only published, newest first
+export async function getPublishedDoctrines(): Promise<Doctrine[]> {
+    const snap = await getDocs(collection(db, "doctrines"));
+    return snap.docs
+        .map((d) => ({ id: d.id, ...d.data() } as Doctrine))
+        .filter((d) => d.published)
+        .sort((a, b) => {
+            const ta = (a.createdAt as any)?.seconds ?? 0;
+            const tb = (b.createdAt as any)?.seconds ?? 0;
+            return tb - ta;
+        });
+}
+
+export const getDoctrine = (id: string) => getOne<Doctrine>("doctrines", id);

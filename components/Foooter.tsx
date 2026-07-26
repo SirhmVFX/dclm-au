@@ -63,7 +63,7 @@ function Footer() {
             <ul className="space-y-2 text-sm text-gray-300">
               <li><Link href="/contact-us" className="hover:text-white">Prayer Requests</Link></li>
               <li><Link href="/contact-us" className="hover:text-white">Connect with Us</Link></li>
-              <li><Link href="/contact-us" className="hover:text-white">Become a Member</Link></li>
+              {/* <li><Link href="/contact-us" className="hover:text-white">Become a Member</Link></li> */}
             </ul>
           </div>
         </div>
