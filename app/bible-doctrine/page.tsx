@@ -1,14 +1,10 @@
 "use client";
 
 import CTA from "@/components/CTA";
-import Pagination from "@/components/Pagination";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
 import { getPublishedDoctrines, Doctrine } from "@/lib/firestore";
-
-const ITEMS_PER_PAGE = 9;
 
 const FALLBACK_DOCTRINES: Doctrine[] = [
     {
@@ -16,10 +12,10 @@ const FALLBACK_DOCTRINES: Doctrine[] = [
         date: "January 1, 2024",
         readingTime: "5 min read",
         title: "The Doctrine of Salvation",
-        description: "We believe that salvation is by grace through faith in the Lord Jesus Christ alone, and not by human effort or merit.",
+        description: "We believe that salvation is by grace through faith in the Lord Jesus Christ alone, and not by human effort or merit. It is the free gift of God to all who believe.",
         content: "",
         published: true,
-        featured: true,
+        featured: false,
     },
     {
         imgSrc: "/assets/2.jpg",
@@ -51,154 +47,170 @@ const FALLBACK_DOCTRINES: Doctrine[] = [
         published: true,
         featured: false,
     },
+    {
+        imgSrc: "/assets/1.jpg",
+        date: "May 15, 2024",
+        readingTime: "6 min read",
+        title: "The Doctrine of the Second Coming",
+        description: "We believe in the personal, visible, and imminent return of the Lord Jesus Christ to receive His Church and to judge the world in righteousness.",
+        content: "",
+        published: true,
+        featured: false,
+    },
+    {
+        imgSrc: "/assets/2.jpg",
+        date: "June 1, 2024",
+        readingTime: "5 min read",
+        title: "The Doctrine of Prayer",
+        description: "We believe that prayer is the believer's vital communion with God — and that through persistent, faith-filled prayer, great things are accomplished for His Kingdom.",
+        content: "",
+        published: true,
+        featured: false,
+    },
 ];
 
-function Doctrines() {
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const currentPage = Number(searchParams.get("page") ?? "1");
-
-    const [allDoctrines, setAllDoctrines] = useState<Doctrine[]>([]);
+function DoctrinesContent() {
+    const [doctrines, setDoctrines] = useState<Doctrine[]>([]);
     const [loading, setLoading] = useState(true);
+    const [openId, setOpenId] = useState<string | null>(null);
 
     useEffect(() => {
         getPublishedDoctrines()
-            .then((data) => setAllDoctrines(data.length > 0 ? data : FALLBACK_DOCTRINES))
-            .catch(() => setAllDoctrines(FALLBACK_DOCTRINES))
+            .then((data) => setDoctrines(data.length > 0 ? data : FALLBACK_DOCTRINES))
+            .catch(() => setDoctrines(FALLBACK_DOCTRINES))
             .finally(() => setLoading(false));
     }, []);
 
-    // Featured shown only on page 1
-    const featured = currentPage === 1
-        ? (allDoctrines.find((d) => d.featured) ?? allDoctrines[0] ?? null)
-        : null;
-    const featuredIndex = featured ? allDoctrines.indexOf(featured) : -1;
-    const rest = allDoctrines.filter((_, i) => i !== featuredIndex);
-
-    const totalPages = Math.ceil(rest.length / ITEMS_PER_PAGE);
-    const safePage = Math.min(Math.max(currentPage, 1), Math.max(totalPages, 1));
-    const pageItems = rest.slice((safePage - 1) * ITEMS_PER_PAGE, safePage * ITEMS_PER_PAGE);
-
-    function setPage(page: number) {
-        const params = new URLSearchParams(searchParams.toString());
-        if (page === 1) params.delete("page"); else params.set("page", String(page));
-        router.push(`?${params.toString()}`, { scroll: true });
-    }
+    const toggle = (id: string) => setOpenId(prev => prev === id ? null : id);
 
     return (
         <>
             {/* ── HERO ── */}
-            <section>
-                <div className="w-300 mx-auto pt-28 md:pt-32 pb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
-                    <div>
-                        <p className="text-sm text-gray-500 mb-1">Bible Doctrine</p>
-                        <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
+            <section className="bg-primary">
+                <div className="w-300 mx-auto pt-28 md:pt-36 pb-16 md:pb-20">
+                    <div className="max-w-2xl">
+                        <p className="text-white/60 uppercase tracking-widest text-xs font-semibold mb-4">
                             What We Believe
+                        </p>
+                        <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
+                            Bible Doctrine
                         </h1>
-                    </div>
-                    <div className="bg-primary p-6 md:p-8 w-full sm:w-72 shrink-0">
-                        <div className="w-full h-10 mb-4">
-                            <Image width={200} height={40} src="/assets/dlclogo.png" alt="DLCF Logo" className="w-full h-full object-contain" />
-                        </div>
-                        <p className="text-white text-sm md:text-base">
-                            We earnestly contend for the faith once delivered unto the saints — standing firm on sound doctrine and godly living.
+                        <p className="text-white/80 text-base md:text-lg leading-relaxed">
+                            We earnestly contend for the faith once delivered unto the saints. These are the
+                            foundational truths that guide every aspect of our fellowship and daily walk with God.
                         </p>
                     </div>
                 </div>
             </section>
 
-            {loading ? (
-                <section className="w-300 mx-auto py-20 text-center text-gray-400 text-sm">
-                    Loading doctrines…
-                </section>
-            ) : allDoctrines.length === 0 ? (
-                <section className="w-300 mx-auto py-20 text-center text-gray-400 text-sm">
-                    No doctrines published yet.
-                </section>
-            ) : (
-                <>
-                    {/* ── FEATURED DOCTRINE ── */}
-                    {featured && (
-                        <section>
-                            <div className="w-300 mx-auto py-10 md:py-20">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-12">
-                                    <Link
-                                        href={featured.id ? `/bible-doctrine/${featured.id}` : "#"}
-                                        className="block w-full h-56 md:h-72 overflow-hidden hover:opacity-90 transition-opacity"
+            {/* ── INTRO BANNER ── */}
+            <section className="border-b border-gray-200 bg-gray-50">
+                <div className="w-300 mx-auto py-8 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-12">
+                    {[
+                        { num: "66", label: "Books of Scripture" },
+                        { num: "3", label: "Persons of the Trinity" },
+                        { num: "1", label: "Way of Salvation" },
+                    ].map((s) => (
+                        <div key={s.label} className="flex items-baseline gap-3">
+                            <span className="text-3xl md:text-4xl font-bold text-primary">{s.num}</span>
+                            <span className="text-gray-600 text-sm font-medium uppercase tracking-wide">{s.label}</span>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* ── DOCTRINES ── */}
+            <section className="w-300 mx-auto py-12 md:py-20">
+                {loading ? (
+                    <p className="text-gray-400 text-sm text-center py-12">Loading doctrines…</p>
+                ) : doctrines.length === 0 ? (
+                    <p className="text-gray-400 text-sm text-center py-12">No doctrines published yet.</p>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {doctrines.map((doctrine, index) => {
+                            const key = doctrine.id ?? String(index);
+                            const isOpen = openId === key;
+                            const hasDetail = !!doctrine.id && !!doctrine.content;
+
+                            return (
+                                <div
+                                    key={key}
+                                    className={`border transition-all duration-300 ${isOpen ? "border-primary shadow-md" : "border-gray-200 hover:border-primary/40"}`}
+                                >
+                                    {/* Card header */}
+                                    <button
+                                        className="w-full text-left p-6 flex items-start gap-4 group"
+                                        onClick={() => toggle(key)}
+                                        aria-expanded={isOpen}
                                     >
-                                        <Image
-                                            width={800}
-                                            height={600}
-                                            src={featured.imgSrc || "/assets/1.jpg"}
-                                            alt={featured.title}
-                                            className="w-full h-full object-cover"
-                                        />
-                                    </Link>
-                                    <div className="flex flex-col justify-center gap-3">
-                                        <div className="flex justify-between">
-                                            <p className="text-sm text-gray-500">{featured.date}</p>
-                                            <p className="text-xs text-gray-400">{featured.readingTime}</p>
+                                        {/* Number badge */}
+                                        <span className={`shrink-0 w-10 h-10 flex items-center justify-center text-sm font-bold transition-colors ${isOpen ? "bg-primary text-white" : "bg-gray-100 text-gray-500 group-hover:bg-primary/10 group-hover:text-primary"}`}>
+                                            {String(index + 1).padStart(2, "0")}
+                                        </span>
+                                        <div className="flex-1 min-w-0">
+                                            <h2 className={`text-base md:text-lg font-bold leading-snug transition-colors ${isOpen ? "text-primary" : "text-gray-800"}`}>
+                                                {doctrine.title}
+                                            </h2>
+                                            <p className="text-xs text-gray-400 mt-1">{doctrine.date} · {doctrine.readingTime}</p>
                                         </div>
-                                        <h2 className="text-xl md:text-2xl font-bold text-gray-800">
-                                            {featured.title}
-                                        </h2>
-                                        <p className="text-gray-600">{featured.description}</p>
-                                        {featured.id && (
-                                            <Link
-                                                href={`/bible-doctrine/${featured.id}`}
-                                                className="text-primary text-sm font-medium hover:underline"
-                                            >
-                                                Read more →
-                                            </Link>
-                                        )}
+                                        {/* Chevron */}
+                                        <span className={`shrink-0 text-xl leading-none text-gray-400 transition-transform duration-300 ${isOpen ? "rotate-45 text-primary" : ""}`}>
+                                            +
+                                        </span>
+                                    </button>
+
+                                    {/* Expandable body */}
+                                    <div
+                                        className={`overflow-hidden transition-all duration-300 ${isOpen ? "max-h-96" : "max-h-0"}`}
+                                        style={{ transitionTimingFunction: "ease" }}
+                                    >
+                                        <div className="px-6 pb-6 pl-20 space-y-4">
+                                            {/* Cover image (small) */}
+                                            {doctrine.imgSrc && (
+                                                <div className="w-full h-40 overflow-hidden">
+                                                    <Image
+                                                        src={doctrine.imgSrc}
+                                                        alt={doctrine.title}
+                                                        width={600}
+                                                        height={200}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </div>
+                                            )}
+                                            <p className="text-gray-600 text-sm leading-relaxed">
+                                                {doctrine.description}
+                                            </p>
+                                            {hasDetail && (
+                                                <Link
+                                                    href={`/bible-doctrine/${doctrine.id}`}
+                                                    className="inline-flex items-center gap-1 text-primary text-sm font-semibold hover:underline"
+                                                >
+                                                    Read full doctrine
+                                                    <span aria-hidden>→</span>
+                                                </Link>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </section>
-                    )}
+                            );
+                        })}
+                    </div>
+                )}
+            </section>
 
-                    {/* ── DOCTRINES GRID ── */}
-                    {pageItems.length > 0 && (
-                        <section>
-                            <div className="w-300 mx-auto pb-4">
-                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                                    {pageItems.map((doctrine, index) => (
-                                        <Link
-                                            key={doctrine.id ?? index}
-                                            href={doctrine.id ? `/bible-doctrine/${doctrine.id}` : "#"}
-                                            className="border border-gray-300 bg-white hover:shadow-md transition-shadow block"
-                                        >
-                                            <div className="w-full h-48 overflow-hidden">
-                                                <Image
-                                                    width={600}
-                                                    height={300}
-                                                    src={doctrine.imgSrc || "/assets/2.jpg"}
-                                                    alt={doctrine.title}
-                                                    className="w-full h-full object-cover"
-                                                />
-                                            </div>
-                                            <div className="p-5 md:p-6">
-                                                <div className="flex justify-between mb-2">
-                                                    <p className="text-sm text-gray-500">{doctrine.date}</p>
-                                                    <p className="text-xs text-gray-400">{doctrine.readingTime}</p>
-                                                </div>
-                                                <h2 className="text-lg font-bold text-gray-800">{doctrine.title}</h2>
-                                                <p className="text-gray-600 text-sm mt-1">{doctrine.description}</p>
-                                            </div>
-                                        </Link>
-                                    ))}
-                                </div>
-
-                                <Pagination
-                                    currentPage={safePage}
-                                    totalPages={totalPages}
-                                    onPageChange={setPage}
-                                />
-                            </div>
-                        </section>
-                    )}
-                </>
-            )}
+            {/* ── SCRIPTURE BANNER ── */}
+            <section className="bg-primary/5 border-y border-primary/20">
+                <div className="w-300 mx-auto py-12 md:py-16 text-center max-w-2xl">
+                    <p className="text-primary/60 text-xs uppercase tracking-widest mb-4 font-semibold">
+                        Our Anchor
+                    </p>
+                    <blockquote className="text-gray-800 text-xl md:text-2xl font-semibold leading-relaxed mb-4">
+                        &ldquo;Jude, the servant of Jesus Christ… exhorted you that ye should earnestly contend
+                        for the faith which was once delivered unto the saints.&rdquo;
+                    </blockquote>
+                    <cite className="text-primary text-sm font-medium not-italic">Jude 1:3</cite>
+                </div>
+            </section>
 
             <CTA />
         </>
@@ -207,8 +219,8 @@ function Doctrines() {
 
 export default function BibleDoctrinePage() {
     return (
-        <Suspense fallback={<div className="min-h-screen" />}>
-            <Doctrines />
+        <Suspense fallback={<div className="min-h-screen bg-primary" />}>
+            <DoctrinesContent />
         </Suspense>
     );
 }

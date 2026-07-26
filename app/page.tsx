@@ -37,7 +37,7 @@ const FB_TESTIMONIALS: Testimonial[] = [
 
 const FB_SERVICES: Service[] = [
   { title: "Our Mission", icon: "FaHome", description: "The DLCF has a divine mandate to win, build and commission students and staff of institutions of higher learning to be their best for the Master.", order: 1, url: "/about-us" },
-  { title: "Bible Doctrine", icon: "FaBuilding", description: "We earnestly contend for the faith which was once delivered unto the saints, standing firm on sound doctrine and godly living.", order: 2, url: "/about-us" },
+  { title: "Bible Doctrine", icon: "FaBuilding", description: "We earnestly contend for the faith which was once delivered unto the saints, standing firm on sound doctrine and godly living.", order: 2, url: "/bible-doctrine" },
   { title: "Daily Manna", icon: "FaBuilding", description: "Access our daily devotional resource to nourish your soul, grow in the Word, and stay connected with God every day.", order: 3, url: "/daily-manna" },
 ];
 
