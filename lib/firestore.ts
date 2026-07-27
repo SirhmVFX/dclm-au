@@ -659,17 +659,23 @@ export interface Doctrine {
     readingTime: string;
     published: boolean;
     featured: boolean;
+    order: number;
     createdAt?: Timestamp;
     updatedAt?: Timestamp;
 }
 
-// Doctrines — only published, newest first
+// Doctrines — only published, sorted by order then createdAt
 export async function getPublishedDoctrines(): Promise<Doctrine[]> {
     const snap = await getDocs(collection(db, "doctrines"));
     return snap.docs
         .map((d) => ({ id: d.id, ...d.data() } as Doctrine))
         .filter((d) => d.published)
         .sort((a, b) => {
+            // primary: order field (ascending)
+            const oa = a.order ?? 999;
+            const ob = b.order ?? 999;
+            if (oa !== ob) return oa - ob;
+            // secondary: createdAt (newest first)
             const ta = (a.createdAt as any)?.seconds ?? 0;
             const tb = (b.createdAt as any)?.seconds ?? 0;
             return tb - ta;
