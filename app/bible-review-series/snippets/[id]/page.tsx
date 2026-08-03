@@ -19,6 +19,9 @@ export default function SnippetDetailPage() {
             .then((data) => {
                 if (!data || !data.published) { setNotFound(true); return; }
                 setSnippet(data);
+                import("@/lib/analytics").then(({ trackItemView }) =>
+                    trackItemView(id, "snippet", data.title, `/bible-review-series/snippets/${id}`)
+                );
             })
             .catch(() => setNotFound(true))
             .finally(() => setLoading(false));

@@ -24,6 +24,9 @@ function EventDetailPage() {
             .then((data) => {
                 if (!data || !data.published) { setNotFound(true); return; }
                 setEvent(data);
+                import("@/lib/analytics").then(({ trackItemView }) =>
+                    trackItemView(id, "event", data.title, `/events/${id}`)
+                );
             })
             .catch(() => setNotFound(true))
             .finally(() => setLoading(false));

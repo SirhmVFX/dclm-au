@@ -19,6 +19,9 @@ export default function DoctrineDetailPage() {
             .then((data) => {
                 if (!data || !data.published) { setNotFound(true); return; }
                 setDoctrine(data);
+                import("@/lib/analytics").then(({ trackItemView }) =>
+                    trackItemView(id, "doctrine", data.title, `/bible-doctrine/${id}`)
+                );
             })
             .catch(() => setNotFound(true))
             .finally(() => setLoading(false));

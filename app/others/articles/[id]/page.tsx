@@ -20,6 +20,10 @@ export default function ArticleDetailPage() {
             .then((data) => {
                 if (!data || !data.published) { setNotFound(true); return; }
                 setArticle(data);
+                // Track this item view
+                import("@/lib/analytics").then(({ trackItemView }) =>
+                    trackItemView(id, "article", data.title, `/others/articles/${id}`)
+                );
             })
             .catch(() => setNotFound(true))
             .finally(() => setLoading(false));

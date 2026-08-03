@@ -66,8 +66,9 @@ function TeachingDetailPage() {
             .then((data) => {
                 if (!data || !data.published) { setNotFound(true); return; }
                 setTeaching(data);
-                // If no written content but has recordings, default to recordings tab
-                // (only when no ?tab param was set explicitly)
+                import("@/lib/analytics").then(({ trackItemView }) =>
+                    trackItemView(id, "teaching", data.title, `/bible-review-series/teachings/${id}`)
+                );
                 if (!data.content && (data.youtubeLinks?.length ?? 0) > 0 && searchParams.get("tab") !== "notes") {
                     setActiveTab("recordings");
                 }

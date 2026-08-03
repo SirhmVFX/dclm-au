@@ -3,6 +3,7 @@ import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Foooter";
+import PageTracker from "@/components/PageTracker";
 
 // Use DM Sans as primary font (modern and readable)
 const dmSans = DM_Sans({
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "DCLM AU - Deeper Christian Life Ministry Australia",
+    title: "DCLM AU - Deeper Life Christian Ministry Australia",
     description:
       "Teaching the undiluted word of God, winning souls, and perfecting saints.",
     images: ["/assets/twitter-image.jpg"],
@@ -85,6 +86,7 @@ export default function RootLayout({
         <meta name="format-detection" content="telephone=no" />
       </head>
       <body className="min-h-full flex flex-col font-sans">
+        <PageTracker />
         <Header />
         {children}
         <Footer />
